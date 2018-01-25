@@ -7,13 +7,13 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author dell
  */
-public class frmCategorias extends javax.swing.JFrame {
+public class frmSeccion extends javax.swing.JFrame {
 
     private DefaultTableModel tabla;
     /**
      * Creates new form frmCategorias
      */
-    public frmCategorias() {
+    public frmSeccion() {
         initComponents();
     }
 
@@ -46,7 +46,7 @@ public class frmCategorias extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Script MT Bold", 2, 28)); // NOI18N
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/logo 2.png"))); // NOI18N
 
-        jLabel4.setText("Agregar/Eliminar Categoria");
+        jLabel4.setText("Agregar/Eliminar Seccion");
 
         btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/agregar.png"))); // NOI18N
         btnAgregar.setText("Agregar");
@@ -78,7 +78,7 @@ public class frmCategorias extends javax.swing.JFrame {
         jLabel5.setText("TeleFood");
 
         jMensaje.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jMensaje.setText("Lista de categorias:");
+        jMensaje.setText("Lista de Seccion:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -180,20 +180,21 @@ public class frmCategorias extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmSeccion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmSeccion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmSeccion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmSeccion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmCategorias().setVisible(true);
+                new frmSeccion().setVisible(true);
             }
         });
     }

@@ -195,8 +195,12 @@ public class frmPedidos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-        frmFactura ventana = new frmFactura();
-        
+        frmFactura ventana;
+        if(jConsumidor.isSelected()){
+            ventana = new frmFactura(true,true);
+        }else{
+            ventana = new frmFactura(true,false);
+        }
         ventana.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnSiguienteActionPerformed
@@ -204,11 +208,13 @@ public class frmPedidos extends javax.swing.JFrame {
     private void jFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFacturaActionPerformed
         // TODO add your handling code here:
         jConsumidor.setSelected(false);
+        jFactura.setSelected(true);
     }//GEN-LAST:event_jFacturaActionPerformed
 
     private void jConsumidorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jConsumidorActionPerformed
         // TODO add your handling code here:
         jFactura.setSelected(false);
+        jConsumidor.setSelected(true);
     }//GEN-LAST:event_jConsumidorActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

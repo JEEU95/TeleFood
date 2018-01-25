@@ -16,25 +16,17 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-
 /**
  *
  * @author dell
  */
 public class frmEliminarDatos extends javax.swing.JFrame {
-    frmMenu ventana = new frmMenu();
 
+    public frmEliminarDatos(String nombre) {
 
-
-    /**
-     * Creates new form frmEliminarCategoria
-     */
-    public frmEliminarDatos() {
         initComponents();
+        lblNombrePanel.setText(nombre + ":");
     }
-
-
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -52,6 +44,7 @@ public class frmEliminarDatos extends javax.swing.JFrame {
         jTextTableModificarCategoria = new javax.swing.JTable();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        lblNombrePanel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -66,7 +59,7 @@ public class frmEliminarDatos extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/logo 2.png"))); // NOI18N
 
         jMensaje.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jMensaje.setText("Señale una categoria:");
+        jMensaje.setText("Señale ");
 
         jTextTableModificarCategoria.setCellSelectionEnabled(true);
         jScrollPane1.setViewportView(jTextTableModificarCategoria);
@@ -87,6 +80,9 @@ public class frmEliminarDatos extends javax.swing.JFrame {
             }
         });
 
+        lblNombrePanel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        lblNombrePanel.setText("..");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -103,10 +99,17 @@ public class frmEliminarDatos extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jMensaje)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addComponent(jMensaje)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblNombrePanel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(53, 53, 53)))
                         .addComponent(jLabel1)
                         .addGap(14, 14, 14)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -119,7 +122,9 @@ public class frmEliminarDatos extends javax.swing.JFrame {
                         .addGap(22, 22, 22)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jMensaje))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jMensaje)
+                            .addComponent(lblNombrePanel)))
                     .addComponent(jLabel1))
                 .addGap(8, 8, 8)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -135,15 +140,27 @@ public class frmEliminarDatos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 
-
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        ventana.setVisible(true);
+        String nombre = (String) lblNombrePanel.getText();
+        if (nombre.equals("Categoria:")) {
+            frmCategorias ventana = new frmCategorias();
+            ventana.setVisible(true);
+        } else {
+            frmProductos ventana = new frmProductos();
+            ventana.setVisible(true);
+        }
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        
-        ventana.setVisible(true);
+        String nombre = (String) lblNombrePanel.getText();
+        if (nombre.equals("Categoria:")) {
+            frmCategorias ventana = new frmCategorias();
+            ventana.setVisible(true);
+        } else {
+            frmProductos ventana = new frmProductos();
+            ventana.setVisible(true);
+        }
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -182,7 +199,7 @@ public class frmEliminarDatos extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmEliminarDatos().setVisible(true);
+                //new frmEliminarDatos().setVisible(true);
             }
         });
     }
@@ -195,5 +212,6 @@ public class frmEliminarDatos extends javax.swing.JFrame {
     private javax.swing.JLabel jMensaje;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTextTableModificarCategoria;
+    private javax.swing.JLabel lblNombrePanel;
     // End of variables declaration//GEN-END:variables
 }

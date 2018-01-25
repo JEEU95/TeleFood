@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  * @author dell
  */
 public class frmNuevaCategoria extends javax.swing.JFrame {
-    frmMenu ventana = new frmMenu();
+    frmCategorias ventana = new frmCategorias();
     
     /**
      * Creates new form frmNuevaCategoria

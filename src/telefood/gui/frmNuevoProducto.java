@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 public class frmNuevoProducto extends javax.swing.JFrame {
 
-    frmMenu ventana = new frmMenu();
+    frmProductos ventana = new frmProductos();
 
     public frmNuevoProducto() {
         initComponents();

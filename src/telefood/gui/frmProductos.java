@@ -147,7 +147,7 @@ public class frmProductos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        frmEliminarDatos ventana =new frmEliminarDatos();
+        frmEliminarDatos ventana =new frmEliminarDatos("Producto");
 
         ventana.setVisible(true);
         dispose();
