@@ -14,6 +14,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.DefaultTableModel;
@@ -346,8 +348,14 @@ public class frmFactura extends javax.swing.JFrame {
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
 
         if (div) {
-            frmPedidos ventana = new frmPedidos();
-            ventana.setVisible(true);
+            frmPedidos ventana;
+            try {
+                ventana = new frmPedidos();
+                ventana.setVisible(true);
+            } catch (Exception ex) {
+                Logger.getLogger(frmFactura.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         } else {
             frmControlPedidos ventana = new frmControlPedidos();
             ventana.setVisible(true);

@@ -24,9 +24,10 @@ import javax.swing.table.TableModel;
  */
 public class frmPedidosProductos extends javax.swing.JFrame {
 
-    frmPedidos ventana= new frmPedidos();
+    frmPedidos ventana;
     
-    public frmPedidosProductos() {
+    public frmPedidosProductos() throws Exception {
+        this.ventana = new frmPedidos();
 
         initComponents();
     }
@@ -213,7 +214,7 @@ public class frmPedidosProductos extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmPedidosProductos().setVisible(true);
+//                new frmPedidosProductos().setVisible(true);
             }
         });
     }

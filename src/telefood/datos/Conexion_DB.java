@@ -26,7 +26,7 @@ public class Conexion_DB {
         } catch (ClassNotFoundException ex) {
             System.out.println("Error al conectar con la BD");
         } catch (SQLException ex) {
-            System.out.println("Erro al conectar con la BD");
+            System.out.println("Error al conectar con la BD");
         }
         return null;
     }

@@ -6,9 +6,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import telefood.logica.Registro;
+import telefood.logica.TeleFood;
 
 
 /**
@@ -16,15 +21,45 @@ import javax.swing.table.DefaultTableModel;
  * @author dell
  */
 public class frmPedidos extends javax.swing.JFrame {
-
+    TeleFood productos = new TeleFood("restadmin","a1");
     double subTotal = 0;
     private DefaultTableModel tabla;
     
     /**
      * Creates new form frmPedidos
      */
-    public frmPedidos() {
+    public frmPedidos() throws Exception {
         initComponents();
+        llenar();
+    }
+    
+    public void llenar() throws Exception{
+        ArrayList<String> columnas = productos.camposTabla("PEDIDO");
+        System.out.println(columnas);
+        
+        DefaultTableModel tb = (DefaultTableModel) tbPedidos.getModel();
+
+        for (String campo : columnas) {
+            tb.addColumn(campo);
+        }
+
+        ArrayList<Registro> registros = productos.listarRegistros("PEDIDO");
+
+        int i = 0;
+        for (Registro reg : registros) {
+            int j = 0;
+
+            tb.addRow(new Object[]{""});
+            for (Object dat : reg.getDatos()) {
+                tb.setValueAt(dat, i, j);
+                j++;
+            }
+
+            i++;
+        
+    }
+        
+        
     }
     
     
@@ -53,7 +88,7 @@ public class frmPedidos extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTablePedidos = new javax.swing.JTable();
+        tbPedidos = new javax.swing.JTable();
         jFactura = new javax.swing.JRadioButton();
         jConsumidor = new javax.swing.JRadioButton();
         btnEliminar = new javax.swing.JButton();
@@ -94,7 +129,7 @@ public class frmPedidos extends javax.swing.JFrame {
 
         jLabel4.setText("Agregar/Quitar Producto");
 
-        jScrollPane1.setViewportView(jTablePedidos);
+        jScrollPane1.setViewportView(tbPedidos);
 
         jFactura.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jFactura.setText("Factura");
@@ -197,9 +232,15 @@ public class frmPedidos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        frmPedidosProductos obj = new frmPedidosProductos();
+        frmPedidosProductos obj;
+        try {
+            obj = new frmPedidosProductos();
+            obj.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(frmPedidos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        obj.setVisible(true);
+        
         dispose();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
@@ -239,9 +280,7 @@ public class frmPedidos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
 
-    /**
-     * @param args the command line arguments
-     */
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -269,7 +308,11 @@ public class frmPedidos extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmPedidos().setVisible(true);
+                try {
+                    new frmPedidos().setVisible(true);
+                } catch (Exception ex) {
+                    Logger.getLogger(frmPedidos.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -287,6 +330,6 @@ public class frmPedidos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTablePedidos;
+    private javax.swing.JTable tbPedidos;
     // End of variables declaration//GEN-END:variables
 }

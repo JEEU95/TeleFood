@@ -5,6 +5,9 @@
  */
 package telefood.gui;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Jorge
@@ -215,8 +218,14 @@ public class frmControlPedidos extends javax.swing.JFrame {
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
         
         if (rbtnSi.isSelected()) {
-            frmPedidos ventana = new frmPedidos();
-            ventana.setVisible(true);
+            frmPedidos ventana;
+            try {
+                ventana = new frmPedidos();
+                ventana.setVisible(true);
+            } catch (Exception ex) {
+                Logger.getLogger(frmControlPedidos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
             
         } else {
             frmFactura ventana;
