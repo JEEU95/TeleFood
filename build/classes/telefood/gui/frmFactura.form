@@ -84,7 +84,7 @@
                                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                                       <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="jLabelFecha" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblFecha" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
@@ -153,7 +153,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel18" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
-                          <Component id="jLabelFecha" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblFecha" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel5" min="-2" pref="14" max="-2" attributes="0"/>
@@ -379,7 +379,7 @@
         <Property name="text" type="java.lang.String" value="$ 0000.00"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabelFecha">
+    <Component class="javax.swing.JLabel" name="lblFecha">
       <Properties>
         <Property name="text" type="java.lang.String" value="DD/MM/YY"/>
       </Properties>

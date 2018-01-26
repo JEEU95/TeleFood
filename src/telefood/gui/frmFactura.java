@@ -31,9 +31,16 @@ public class frmFactura extends javax.swing.JFrame {
         this.con = con;
         this.div = div;
         initComponents();
+        lblFecha.setText(fechaActual());
         if(con){
             deshabilitar();
         }
+
+    }
+    public static String fechaActual() {
+        Date fecha = new Date();
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/YY");
+        return formatoFecha.format(fecha);
 
     }
     
@@ -82,7 +89,7 @@ public class frmFactura extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jLabelIva = new javax.swing.JLabel();
         jLabelTotal = new javax.swing.JLabel();
-        jLabelFecha = new javax.swing.JLabel();
+        lblFecha = new javax.swing.JLabel();
         btnAtras = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -159,7 +166,7 @@ public class frmFactura extends javax.swing.JFrame {
         jLabelTotal.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         jLabelTotal.setText("$ 0000.00");
 
-        jLabelFecha.setText("DD/MM/YY");
+        lblFecha.setText("DD/MM/YY");
 
         btnAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/atras.png"))); // NOI18N
         btnAtras.setText("Atras");
@@ -218,7 +225,7 @@ public class frmFactura extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addComponent(jLabel18)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jLabelFecha)
+                                        .addComponent(lblFecha)
                                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addComponent(jLabel17)
@@ -267,7 +274,7 @@ public class frmFactura extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelFecha))
+                            .addComponent(lblFecha))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -398,13 +405,13 @@ public class frmFactura extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel jLabelFecha;
     private javax.swing.JLabel jLabelIva;
     private javax.swing.JLabel jLabelNumeroFactura;
     private javax.swing.JLabel jLabelSubTotal;
     private javax.swing.JLabel jLabelTotal;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableListaFactura;
+    private javax.swing.JLabel lblFecha;
     private javax.swing.JTextField txtCedula;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtNombre;
