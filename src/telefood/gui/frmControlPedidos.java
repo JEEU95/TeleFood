@@ -5,23 +5,57 @@
  */
 package telefood.gui;
 
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import telefood.logica.Registro;
+import telefood.logica.TeleFood;
 
 /**
  *
  * @author Jorge
  */
 public class frmControlPedidos extends javax.swing.JFrame {
-
+    TeleFood productos = new TeleFood("restadmin","a1");
     /**
      * Creates new form frmControlPedidos
      */
     public frmControlPedidos() {
         initComponents();
         lblDividir.setVisible(false);
-        txtCantidad.setVisible(false);
+        spnCuentas.setVisible(false);
     }
+    
+    public void llenar() throws Exception{
+        ArrayList<String> columnas = productos.camposTabla("PEDIDO");
+        System.out.println(columnas);
+        
+        DefaultTableModel tb = (DefaultTableModel) tbPedidos.getModel();
+
+        for (String campo : columnas) {
+            tb.addColumn(campo);
+        }
+
+        ArrayList<Registro> registros = productos.listarRegistros("PEDIDO");
+
+        int i = 0;
+        for (Registro reg : registros) {
+            int j = 0;
+
+            tb.addRow(new Object[]{""});
+            for (Object dat : reg.getDatos()) {
+                tb.setValueAt(dat, i, j);
+                j++;
+            }
+
+            i++;
+        
+    }
+        
+        
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,10 +77,10 @@ public class frmControlPedidos extends javax.swing.JFrame {
         rbtnSi = new javax.swing.JRadioButton();
         rbtnNo = new javax.swing.JRadioButton();
         lblDividir = new javax.swing.JLabel();
-        txtCantidad = new javax.swing.JTextField();
         rbtnFactura = new javax.swing.JRadioButton();
         rbtnConsumidor = new javax.swing.JRadioButton();
         jLabel6 = new javax.swing.JLabel();
+        spnCuentas = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -117,6 +151,8 @@ public class frmControlPedidos extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel6.setText("¿Desea dividir la cuenta?");
 
+        spnCuentas.setModel(new javax.swing.SpinnerNumberModel(2, 2, null, 1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -157,8 +193,8 @@ public class frmControlPedidos extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(lblDividir))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(71, 71, 71)
-                                .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(63, 63, 63)
+                                .addComponent(spnCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(rbtnFactura)
@@ -189,7 +225,7 @@ public class frmControlPedidos extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                         .addComponent(btnSiguiente)
                         .addGap(49, 49, 49))
                     .addGroup(layout.createSequentialGroup()
@@ -207,7 +243,7 @@ public class frmControlPedidos extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(rbtnSi)
                                     .addComponent(rbtnNo)
-                                    .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(spnCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
@@ -249,7 +285,7 @@ public class frmControlPedidos extends javax.swing.JFrame {
         rbtnSi.setSelected(false);
         rbtnNo.setSelected(true);
         lblDividir.setVisible(false);
-        txtCantidad.setVisible(false);
+        spnCuentas.setVisible(false);
         rbtnConsumidor.setVisible(true);
         rbtnFactura.setVisible(true);
     }//GEN-LAST:event_rbtnNoActionPerformed
@@ -258,7 +294,7 @@ public class frmControlPedidos extends javax.swing.JFrame {
         rbtnNo.setSelected(false);
         rbtnSi.setSelected(true);
         lblDividir.setVisible(true);
-        txtCantidad.setVisible(true);
+        spnCuentas.setVisible(true);
         rbtnConsumidor.setVisible(false);
         rbtnFactura.setVisible(false);
     }//GEN-LAST:event_rbtnSiActionPerformed
@@ -324,7 +360,7 @@ public class frmControlPedidos extends javax.swing.JFrame {
     private javax.swing.JRadioButton rbtnFactura;
     private javax.swing.JRadioButton rbtnNo;
     private javax.swing.JRadioButton rbtnSi;
+    private javax.swing.JSpinner spnCuentas;
     private javax.swing.JTable tbPedidos;
-    private javax.swing.JTextField txtCantidad;
     // End of variables declaration//GEN-END:variables
 }

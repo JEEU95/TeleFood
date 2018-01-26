@@ -16,18 +16,30 @@ public class Conexion_DB {
 
     public static Connection conectar(String user, String pass) {
         try {
-            Parametros_DB pc=new Parametros_DB();
-            Class.forName(pc.Driver);
-            String BD = pc.URL;
-            //Establece la conexion con (BD, "HR", "1234");
-            Connection cnx = DriverManager.getConnection(BD, user, pass);
+            String url = "jdbc:mysql://wwecuador.com:3306/";
+            String dbName = "wwecuado_telefood";
 
+            String driver = "com.mysql.jdbc.Driver";
+            String userName = "wwecuado_tf"; 
+            String password = "T3l3f00d!\"";  
+            Class.forName(driver).newInstance();
+            Connection conn = DriverManager.getConnection(url+dbName,userName,password);
+            System.out.println("Todo bien.");
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
+            System.out.println("Error al conectar DB");
+        }/*
+        try {
+            Parametros_DB pc=new Parametros_DB();
+          
+            String BD = pc.URL;
+            System.out.println(BD);
+            //Establece la conexion con (BD, "HR", "1234");
+            Connection cnx = DriverManager.getConnection(BD,user, pass);
+            System.out.println("**********************");
             return cnx;
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Error al conectar con la BD");
         } catch (SQLException ex) {
             System.out.println("Error al conectar con la BD");
-        }
+        }*/
         return null;
     }
 

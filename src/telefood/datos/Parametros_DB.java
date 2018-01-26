@@ -7,9 +7,15 @@ package telefood.datos;
  */
 public class Parametros_DB {
     
-    String puerto="1521";
-    String dbName="XE";
-    String host="localhost";
-    String URL="jdbc:oracle:thin:@"+host+":"+puerto+":"+dbName;
-    String Driver="oracle.jdbc.driver.OracleDriver";
+    String puerto="3306";
+    
+    String dbName="wwecuado_telefood";
+    String host="wwecuador.com";
+    
+    
+    //String URL="jdbc:mysql://"+host+":"+puerto+"/"+dbName+"?";
+    String URL="jdbc:mysql://wwecuador.com:3306/wwecuado_telefood?zeroDateTimeBehavior=convertToNull";
+    
+    //String URL="jdbc:oracle:thin:@"+host+":"+puerto+":"+dbName;
+    
 }

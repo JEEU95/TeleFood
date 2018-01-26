@@ -21,7 +21,7 @@ import telefood.logica.TeleFood;
  * @author dell
  */
 public class frmPedidos extends javax.swing.JFrame {
-    TeleFood productos = new TeleFood("restadmin","a1");
+    TeleFood productos = new TeleFood("wwecuado_tf","T3l3f00d!\"");
     double subTotal = 0;
     private DefaultTableModel tabla;
     
