@@ -233,9 +233,9 @@ public class frmPedidos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        frmEliminarDatos ventana= new frmEliminarDatos("Pedido");
+        /*frmEliminarDatos ventana= new frmEliminarDatos("Pedido");
         ventana.setVisible(true);
-        dispose();
+        dispose();*/
     }//GEN-LAST:event_btnEliminarActionPerformed
 
 

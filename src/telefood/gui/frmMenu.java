@@ -34,7 +34,6 @@ public class frmMenu extends javax.swing.JFrame {
         jMenuBar = new javax.swing.JMenuBar();
         jMenu = new javax.swing.JMenu();
         jProductos = new javax.swing.JMenuItem();
-        jCategorias = new javax.swing.JMenuItem();
         jVentasRealizadas = new javax.swing.JMenuItem();
         jPedido = new javax.swing.JMenuItem();
         jSalir = new javax.swing.JMenuItem();
@@ -62,15 +61,6 @@ public class frmMenu extends javax.swing.JFrame {
             }
         });
         jMenu.add(jProductos);
-
-        jCategorias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/categorias.png"))); // NOI18N
-        jCategorias.setText("Categorias");
-        jCategorias.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCategoriasActionPerformed(evt);
-            }
-        });
-        jMenu.add(jCategorias);
 
         jVentasRealizadas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/listado.png"))); // NOI18N
         jVentasRealizadas.setText("Facturas");
@@ -133,12 +123,6 @@ public class frmMenu extends javax.swing.JFrame {
     private void jSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSalirActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jSalirActionPerformed
-
-    private void jCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCategoriasActionPerformed
-        frmCategorias ventana = new frmCategorias();
-        ventana.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_jCategoriasActionPerformed
 
     private void jVentasRealizadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jVentasRealizadasActionPerformed
         frmVentasRealizadas ventana = new frmVentasRealizadas();
@@ -203,7 +187,6 @@ public class frmMenu extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem jCategorias;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu;
     private javax.swing.JMenuBar jMenuBar;

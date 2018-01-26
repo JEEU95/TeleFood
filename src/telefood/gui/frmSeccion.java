@@ -141,15 +141,15 @@ public class frmSeccion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        frmNuevaCategoria ventana= new frmNuevaCategoria();
+       /* frmNuevaCategoria ventana= new frmNuevaCategoria();
         ventana.setVisible(true);
-        dispose();
+        dispose();*/
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        frmEliminarDatos ventana= new frmEliminarDatos("Categoria");
+        /*frmEliminarDatos ventana= new frmEliminarDatos("Categoria");
         ventana.setVisible(true);
-        dispose();
+        dispose();*/
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
