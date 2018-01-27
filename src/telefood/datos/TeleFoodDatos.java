@@ -13,7 +13,8 @@ public class TeleFoodDatos extends Conexion_DB {
     ArrayList<String> com;
  
     Connection cnx;
-    String user,pass;
+    String user ,pass;
+    //String user="wwecuado_tf",pass="T3l3f00d!\"";
 
     public TeleFoodDatos(String user, String pass) {
         //Constructor para implementar las tablas (necesito saber usuario y contraseña para establecer la conexion)
@@ -26,10 +27,11 @@ public class TeleFoodDatos extends Conexion_DB {
         com = (ArrayList<String>) o;
         try {
             cnx=conectar(user,pass);
+            System.out.println("INSERT INTO " + com.get(0) + " VALUES(" + com.get(1) + ")");
             PreparedStatement pst = cnx.prepareStatement("INSERT INTO " + com.get(0) + " VALUES(" + com.get(1) + ")");
             pst.executeUpdate();
         } catch (Exception e) {
-            System.out.println("Error al registrar");
+            System.out.println("Error al registrar TeleFoodDatos");
         } 
 
     }
@@ -45,7 +47,7 @@ public class TeleFoodDatos extends Conexion_DB {
 
             pst.executeUpdate();
         } catch (Exception e) {
-            System.out.println("Error al modificar");
+            System.out.println("Error al modificar TeleFoodDatos");
         } 
     }
 
@@ -55,13 +57,14 @@ public class TeleFoodDatos extends Conexion_DB {
         try {
             cnx=conectar(user,pass);
             //nom,campC
-            PreparedStatement pst = cnx.prepareStatement("DELETE " + com.get(0) + " WHERE " + com.get(1));
+            
+            PreparedStatement pst = cnx.prepareStatement("DELETE FROM " + com.get(0) + " WHERE " + com.get(1));
 
             pst.executeUpdate();
             
             System.out.println("Dato Actualizado");
         } catch (Exception e) {
-            System.out.println("Error al eliminar");
+            System.out.println("Error al eliminar TeleFoodDatos");
         } 
     }
 
@@ -72,10 +75,9 @@ public class TeleFoodDatos extends Conexion_DB {
         
         //se controla el error en caso de que no se envie una condicion
         try {
-            condicion += " "+com.get(2);
+            condicion += " WHERE "+com.get(2);
         } catch (Exception e) {
-            System.out.println("Error en consulta");
-            System.out.println(e.getMessage());
+            System.out.println("No existe condicion");
             condicion = "";
         }
 
@@ -85,18 +87,17 @@ public class TeleFoodDatos extends Conexion_DB {
             cnx=conectar(user,pass);
             
             Statement st = cnx.createStatement();
-            
+            System.out.println("SELECT " + com.get(0) + " FROM " + com.get(1) + condicion);
             ResultSet rs = st.executeQuery("SELECT " + com.get(0) + " FROM " + com.get(1) + condicion); //Realizar consulta
             return rs;
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            System.out.println("Error en listado");
+            System.out.println("Error en listado de la consulta TeleFoodDatos");
         } 
         
         return null;
         
     }
-
+/*
     public void ejecutar(Object o) throws Exception {
         //El objeto o es para recibir una consulta personalizada desde la interfaz de usuario
         try {
@@ -105,14 +106,11 @@ public class TeleFoodDatos extends Conexion_DB {
             
             System.out.println("Ejecutar: "+(String)o);
             PreparedStatement pst = cnx.prepareStatement((String)o);
-
             pst.executeUpdate();
-            
-            System.out.println("Permisos actualizados");
         } catch (Exception e) {
-            System.out.println("Error al ejecutar");
+            System.out.println("Error al ejecutar TeleFoodDatos");
         }
     }
     
-    
+  */  
 }

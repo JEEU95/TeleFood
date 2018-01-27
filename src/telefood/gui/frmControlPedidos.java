@@ -18,44 +18,18 @@ import telefood.logica.TeleFood;
  */
 public class frmControlPedidos extends javax.swing.JFrame {
 
-    TeleFood productos = new TeleFood("restadmin", "a1");
+    TeleFood pedidos=null;
 
     /**
      * Creates new form frmControlPedidos
      */
-    public frmControlPedidos() {
+    public frmControlPedidos(TeleFood pedidos) {
         initComponents();
+        this.pedidos= pedidos;
         lblDividir.setVisible(false);
         spnCuentas.setVisible(false);
     }
 
-    public void llenar() throws Exception {
-        ArrayList<String> columnas = productos.camposTabla("Pedido");
-        System.out.println(columnas);
-
-        DefaultTableModel tb = (DefaultTableModel) tbPedidos.getModel();
-
-        for (String campo : columnas) {
-            tb.addColumn(campo);
-        }
-
-        ArrayList<Registro> registros = productos.listarRegistros("Pedido");
-
-        int i = 0;
-        for (Registro reg : registros) {
-            int j = 0;
-
-            tb.addRow(new Object[]{""});
-            for (Object dat : reg.getDatos()) {
-                tb.setValueAt(dat, i, j);
-                j++;
-            }
-
-            i++;
-
-        }
-
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -256,7 +230,7 @@ public class frmControlPedidos extends javax.swing.JFrame {
         if (rbtnSi.isSelected()) {
             frmPedidos ventana;
             try {
-                ventana = new frmPedidos();
+                ventana = new frmPedidos(pedidos);
                 ventana.setVisible(true);
             } catch (Exception ex) {
                 Logger.getLogger(frmControlPedidos.class.getName()).log(Level.SEVERE, null, ex);
@@ -266,9 +240,9 @@ public class frmControlPedidos extends javax.swing.JFrame {
             frmFactura ventana = null;
             try {
                 if (rbtnConsumidor.isSelected()) {
-                    ventana = new frmFactura(false, true);
+                    ventana = new frmFactura(false, true,pedidos);
                 } else {
-                    ventana = new frmFactura(false, false);
+                    ventana = new frmFactura(false, false,pedidos);
                 }
             } catch (Exception e) {
                 System.out.println(e);
@@ -313,41 +287,6 @@ public class frmControlPedidos extends javax.swing.JFrame {
         rbtnFactura.setSelected(false);
         rbtnConsumidor.setSelected(true);
     }//GEN-LAST:event_rbtnConsumidorActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmControlPedidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmControlPedidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmControlPedidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmControlPedidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new frmControlPedidos().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSiguiente;

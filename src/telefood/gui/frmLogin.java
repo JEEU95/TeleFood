@@ -1,12 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package telefood.gui;
 
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.sql.Connection;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import telefood.datos.Conexion_DB;
+import telefood.logica.TeleFood;
 
 /**
  *
@@ -14,9 +14,6 @@ import java.awt.Toolkit;
  */
 public class frmLogin extends javax.swing.JFrame {
 
-    /**
-     * Creates new form frmPrincipal
-     */
     public frmLogin() {
         initComponents();
     }
@@ -36,9 +33,9 @@ public class frmLogin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        usuario = new javax.swing.JTextField();
+        txtUser = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        pwd = new javax.swing.JPasswordField();
+        txtPass = new javax.swing.JPasswordField();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         btn_login = new java.awt.Button();
@@ -64,24 +61,24 @@ public class frmLogin extends javax.swing.JFrame {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/WhatsApp Image 2018-01-13 at 00.27.08.jpeg"))); // NOI18N
 
-        usuario.setForeground(new java.awt.Color(102, 102, 102));
-        usuario.setText("Usuario ");
-        usuario.setBorder(null);
-        usuario.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtUser.setForeground(new java.awt.Color(102, 102, 102));
+        txtUser.setText("Usuario ");
+        txtUser.setBorder(null);
+        txtUser.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                usuarioFocusGained(evt);
+                txtUserFocusGained(evt);
             }
         });
 
         jSeparator1.setBackground(new java.awt.Color(41, 168, 73));
         jSeparator1.setForeground(new java.awt.Color(41, 168, 73));
 
-        pwd.setForeground(new java.awt.Color(102, 102, 102));
-        pwd.setText("jPasswordField1");
-        pwd.setBorder(null);
-        pwd.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtPass.setForeground(new java.awt.Color(102, 102, 102));
+        txtPass.setText("jPasswordField1");
+        txtPass.setBorder(null);
+        txtPass.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                pwdFocusGained(evt);
+                txtPassFocusGained(evt);
             }
         });
 
@@ -123,7 +120,6 @@ public class frmLogin extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(69, 69, 69)
@@ -137,8 +133,8 @@ public class frmLogin extends javax.swing.JFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(jSeparator1)
-                                        .addComponent(usuario)
-                                        .addComponent(pwd)
+                                        .addComponent(txtUser)
+                                        .addComponent(txtPass)
                                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                     .addComponent(jLabel6)
@@ -158,14 +154,14 @@ public class frmLogin extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(pwd, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -207,20 +203,37 @@ public class frmLogin extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void usuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usuarioFocusGained
+    private void txtUserFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUserFocusGained
         // TODO add your handling code here:
-        usuario.setText("");
-    }//GEN-LAST:event_usuarioFocusGained
+        txtUser.setText("");
+    }//GEN-LAST:event_txtUserFocusGained
 
-    private void pwdFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pwdFocusGained
+    private void txtPassFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPassFocusGained
         // TODO add your handling code here:
-        pwd.setText("");
-    }//GEN-LAST:event_pwdFocusGained
+        txtPass.setText("");
+    }//GEN-LAST:event_txtPassFocusGained
 
     private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
-        frmMenu ventana = new frmMenu();
-        ventana.setVisible(true);
-        dispose();
+
+        String user = txtUser.getText();
+        String pass = txtPass.getText();
+        //Connection cnx = ConnectionDB.getConnection(user, pass);
+        Connection cnx = Conexion_DB.conectar(user, pass);
+
+        if (cnx == null) {
+            JOptionPane.showMessageDialog(rootPane, "Usuario o contraseña invalidos");
+        } else {
+            try {
+                TeleFood tablas = new TeleFood(user, pass);
+                frmMenu ventana = new frmMenu(tablas);
+                ventana.setVisible(true);
+                dispose();
+            }catch (Exception ex) {
+                JOptionPane.showMessageDialog(rootPane, "Error al conectar usuario");
+            }
+        }
+
+
     }//GEN-LAST:event_btn_loginActionPerformed
 
     private void lbl_closeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_closeMousePressed
@@ -228,13 +241,13 @@ public class frmLogin extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_lbl_closeMousePressed
 
-      @Override
+    @Override
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().
                 getImage(ClassLoader.getSystemResource("img/icono.png"));
         return retValue;
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -285,7 +298,7 @@ public class frmLogin extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lbl_close;
-    private javax.swing.JPasswordField pwd;
-    private javax.swing.JTextField usuario;
+    private javax.swing.JPasswordField txtPass;
+    private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
 }

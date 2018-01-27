@@ -18,43 +18,17 @@ import telefood.logica.TeleFood;
 
 public class frmVentasRealizadas extends javax.swing.JFrame {
 
-    TeleFood productos = new TeleFood("wwecuado_tf", "T3l3f00d!\"");
+    TeleFood ventas=null;
     private DefaultTableModel tabla;
 
     /**
      * Creates new form frmVentasRealizadas
      */
-    public frmVentasRealizadas() {
+    public frmVentasRealizadas(TeleFood ventas) {
         initComponents();
+        this.ventas=ventas;
     }
 
-    public void llenar() throws Exception {
-        ArrayList<String> columnas = productos.camposTabla("Pedido");
-        System.out.println(columnas);
-
-        DefaultTableModel tb = (DefaultTableModel) tbListaVentas.getModel();
-
-        for (String campo : columnas) {
-            tb.addColumn(campo);
-        }
-
-        ArrayList<Registro> registros = productos.listarRegistros("Pedido");
-
-        int i = 0;
-        for (Registro reg : registros) {
-            int j = 0;
-
-            tb.addRow(new Object[]{""});
-            for (Object dat : reg.getDatos()) {
-                tb.setValueAt(dat, i, j);
-                j++;
-            }
-
-            i++;
-
-        }
-
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -164,7 +138,7 @@ public class frmVentasRealizadas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        frmMenu ventana = new frmMenu();
+        frmMenu ventana = new frmMenu(ventas);
         ventana.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
@@ -177,41 +151,6 @@ public class frmVentasRealizadas extends javax.swing.JFrame {
     private void jComboBoxFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFechaActionPerformed
 
     }//GEN-LAST:event_jComboBoxFechaActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmVentasRealizadas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmVentasRealizadas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmVentasRealizadas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmVentasRealizadas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new frmVentasRealizadas().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;

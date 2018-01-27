@@ -48,7 +48,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel3" min="-2" pref="70" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jComboBoxCategoria" max="32767" attributes="0"/>
+                      <Component id="cmbCategoria" max="32767" attributes="0"/>
                   </Group>
                   <Component id="jSeparator1" alignment="0" min="-2" pref="472" max="-2" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
@@ -59,8 +59,8 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jTextProducto" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jTextCosto" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtProducto" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtCosto" alignment="0" max="32767" attributes="0"/>
                           <Component id="jTextDescripcion" alignment="0" pref="384" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -90,16 +90,16 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jComboBoxCategoria" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cmbCategoria" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jTextProducto" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtProducto" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jTextCosto" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtCosto" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -158,14 +158,14 @@
         <Property name="text" type="java.lang.String" value="Producto:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextProducto">
+    <Component class="javax.swing.JTextField" name="txtProducto">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
       <Properties>
         <Property name="text" type="java.lang.String" value="Costo:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextCosto">
+    <Component class="javax.swing.JTextField" name="txtCosto">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
@@ -192,7 +192,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JComboBox" name="jComboBoxCategoria">
+    <Component class="javax.swing.JComboBox" name="cmbCategoria">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="2">

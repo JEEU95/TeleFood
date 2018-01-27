@@ -20,10 +20,10 @@ public class Conexion_DB {
             String dbName = "wwecuado_telefood";
 
             String driver = "com.mysql.jdbc.Driver";
-            String userName = "wwecuado_tf"; 
-            String password = "T3l3f00d!\"";  
+            /*String userName = "wwecuado_tf"; 
+            String password = "T3l3f00d!\"";  */
             Class.forName(driver).newInstance();
-            Connection conn = DriverManager.getConnection(url+dbName,userName,password);
+            Connection conn = DriverManager.getConnection(url+dbName,user,pass);
             //System.out.println("Todo bien.");
             return conn;
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {

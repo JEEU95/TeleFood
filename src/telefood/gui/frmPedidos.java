@@ -21,20 +21,21 @@ import telefood.logica.TeleFood;
  */
 public class frmPedidos extends javax.swing.JFrame {
 
-    TeleFood productos = new TeleFood("wwecuado_tf", "T3l3f00d!\"");
+    TeleFood pedidos = null;
     double subTotal = 0;
     private DefaultTableModel tabla;
 
     /**
      * Creates new form frmPedidos
      */
-    public frmPedidos() throws Exception {
+    public frmPedidos(TeleFood pedidos) throws Exception {
         initComponents();
+        this.pedidos=pedidos;
         llenar();
     }
 
     public void llenar() throws Exception {
-        ArrayList<String> columnas = productos.camposTabla("Pedido");
+        ArrayList<String> columnas = pedidos.camposTabla("Pedido");
         System.out.println(columnas);
 
         DefaultTableModel tb = (DefaultTableModel) tbPedidos.getModel();
@@ -212,10 +213,10 @@ public class frmPedidos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        frmPedidosProductos obj;
+        frmPedidosProductos ventana;
         try {
-            obj = new frmPedidosProductos();
-            obj.setVisible(true);
+            ventana = new frmPedidosProductos(pedidos);
+            ventana.setVisible(true);
         } catch (Exception ex) {
             Logger.getLogger(frmPedidos.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -227,9 +228,9 @@ public class frmPedidos extends javax.swing.JFrame {
         frmFactura ventana = null;
         try {
             if (jConsumidor.isSelected()) {
-                ventana = new frmFactura(true, true);
+                ventana = new frmFactura(true, true,pedidos);
             } else {
-                ventana = new frmFactura(true, false);
+                ventana = new frmFactura(true, false,pedidos);
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -251,7 +252,7 @@ public class frmPedidos extends javax.swing.JFrame {
     }//GEN-LAST:event_jConsumidorActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        frmMenu menu = new frmMenu();
+        frmMenu menu = new frmMenu(pedidos);
         menu.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -262,42 +263,7 @@ public class frmPedidos extends javax.swing.JFrame {
         dispose();*/
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmPedidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmPedidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmPedidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmPedidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    new frmPedidos().setVisible(true);
-                } catch (Exception ex) {
-                    Logger.getLogger(frmPedidos.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-    }
-
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnCancelar;

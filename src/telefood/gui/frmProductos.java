@@ -17,19 +17,21 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import telefood.logica.Registro;
 import telefood.logica.TeleFood;
+
 /**
  *
  * @author dell
  */
 public class frmProductos extends javax.swing.JFrame {
-    TeleFood productos = new TeleFood("wwecuado_tf", "T3l3f00d!\"");
-    
-    public frmProductos() throws Exception {
+
+    TeleFood productos = null;
+
+    public frmProductos(TeleFood productos) throws Exception {
         initComponents();
+        this.productos=productos;
         llenar();
     }
-    
-    
+
     public void llenar() throws Exception {
         ArrayList<String> columnas = productos.camposTabla("Producto");
         System.out.println(columnas);
@@ -57,8 +59,6 @@ public class frmProductos extends javax.swing.JFrame {
         }
 
     }
-
-     
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -175,65 +175,47 @@ public class frmProductos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        frmNuevoProducto ventana =new frmNuevoProducto();
-        
+        frmNuevoProducto ventana = new frmNuevoProducto(productos);
+
         ventana.setVisible(true);
-        dispose();
+        
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-       /* frmEliminarDatos ventana =new frmEliminarDatos("Producto");
+        DefaultTableModel tb = (DefaultTableModel) tbListaProductos.getModel();
+        ArrayList<String> camposClave = new ArrayList();
+        int i = tbListaProductos.getSelectedRow();
+        Registro reg = new Registro();
+        System.out.println("Posicion Eliminar:" + i);
+        try {
+            for (int j = 0; j < tb.getColumnCount(); j++) {
+                if (tb.getColumnName(j).contains("Id")) {
+                    camposClave.add(tb.getColumnName(j) + "='" + (String) tb.getValueAt(i, j) + "'");
+                }
+                reg.setDatos(tb.getValueAt(i, j));
+            }
 
-        ventana.setVisible(true);
-        dispose();*/
+            int res = JOptionPane.showConfirmDialog(rootPane, "Esta seguro que desea eliminar:\n" + reg.getDatos(), "ELIMINAR (CONFIRMACION)", 0);
+            if (res == 0) {
+                
+
+                
+                productos.eliminarDatos("Producto", camposClave);
+                System.out.println("Dato Eliminado");
+            }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(rootPane, "Seleccione la fila a eliminar!");
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        frmMenu ventana =new frmMenu();
+        frmMenu ventana = new frmMenu(productos);
         ventana.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
-       
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    new frmProductos().setVisible(true);
-                } catch (Exception ex) {
-                    Logger.getLogger(frmProductos.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-    }
-
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnAgregar;

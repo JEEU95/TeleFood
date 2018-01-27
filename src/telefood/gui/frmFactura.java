@@ -28,13 +28,14 @@ import telefood.logica.TeleFood;
  * @author dell
  */
 public class frmFactura extends javax.swing.JFrame {
-    TeleFood productos = new TeleFood("wwecuado_tf", "T3l3f00d!\"");
+    TeleFood pedidos = null;
     boolean div = false;
     boolean con = false;
 
-    public frmFactura(boolean div, boolean con) throws Exception {
+    public frmFactura(boolean div, boolean con,TeleFood pedidos) throws Exception {
         this.con = con;
         this.div = div;
+        this.pedidos=pedidos;
         initComponents();
         lblFecha.setText(fechaActual());
         if(con){
@@ -62,7 +63,7 @@ public class frmFactura extends javax.swing.JFrame {
     }
     
     public void llenar() throws Exception {
-        ArrayList<String> columnas = productos.camposTabla("Factura");
+        ArrayList<String> columnas = pedidos.camposTabla("Factura");
         System.out.println(columnas);
 
         DefaultTableModel tb = (DefaultTableModel) tbListaFactura.getModel();
@@ -71,7 +72,7 @@ public class frmFactura extends javax.swing.JFrame {
             tb.addColumn(campo);
         }
 /*
-        ArrayList<Registro> registros = productos.listarRegistros("Pedido");
+        ArrayList<Registro> registros = pedidos.listarRegistros("Pedido");
 
         int i = 0;
         for (Registro reg : registros) {
@@ -359,7 +360,7 @@ public class frmFactura extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        frmMenu ventana = new frmMenu();
+        frmMenu ventana = new frmMenu(pedidos);
         ventana.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
@@ -383,51 +384,19 @@ public class frmFactura extends javax.swing.JFrame {
         if (div) {
             frmPedidos ventana;
             try {
-                ventana = new frmPedidos();
+                ventana = new frmPedidos(pedidos);
                 ventana.setVisible(true);
             } catch (Exception ex) {
                 Logger.getLogger(frmFactura.class.getName()).log(Level.SEVERE, null, ex);
             }
             
         } else {
-            frmControlPedidos ventana = new frmControlPedidos();
+            frmControlPedidos ventana = new frmControlPedidos(pedidos);
             ventana.setVisible(true);
         }
         dispose();
     }//GEN-LAST:event_btnAtrasActionPerformed
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmFactura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmFactura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmFactura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmFactura.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-              //  new frmFactura().setVisible(true);
-
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;

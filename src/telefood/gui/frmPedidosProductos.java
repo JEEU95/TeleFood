@@ -26,18 +26,19 @@ import telefood.logica.TeleFood;
  * @author dell
  */
 public class frmPedidosProductos extends javax.swing.JFrame {
-    TeleFood productos = new TeleFood("wwecuado_tf", "T3l3f00d!\"");
+    TeleFood ped_pro = null;
     frmPedidos ventana;
     
-    public frmPedidosProductos() throws Exception {
-        this.ventana = new frmPedidos();
+    public frmPedidosProductos(TeleFood ped_pro) throws Exception {
+        this.ped_pro=ped_pro;
+        this.ventana = new frmPedidos(ped_pro);
 
         initComponents();
     }
     
     
     public void llenar() throws Exception {
-        ArrayList<String> columnas = productos.camposTabla("Pedido");
+        ArrayList<String> columnas = ped_pro.camposTabla("Pedido");
         System.out.println(columnas);
 
         DefaultTableModel tb = (DefaultTableModel) tbModificarProductos.getModel();
@@ -46,7 +47,7 @@ public class frmPedidosProductos extends javax.swing.JFrame {
             tb.addColumn(campo);
         }
 
-        ArrayList<Registro> registros = productos.listarRegistros("Pedido");
+        ArrayList<Registro> registros = ped_pro.listarRegistros("Pedido");
 
         int i = 0;
         for (Registro reg : registros) {
@@ -216,41 +217,6 @@ public class frmPedidosProductos extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmPedidosProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmPedidosProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmPedidosProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmPedidosProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-//                new frmPedidosProductos().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
