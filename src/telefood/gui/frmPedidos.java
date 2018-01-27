@@ -15,16 +15,16 @@ import javax.swing.table.DefaultTableModel;
 import telefood.logica.Registro;
 import telefood.logica.TeleFood;
 
-
 /**
  *
  * @author dell
  */
 public class frmPedidos extends javax.swing.JFrame {
-    TeleFood productos = new TeleFood("wwecuado_tf","T3l3f00d!\"");
+
+    TeleFood productos = new TeleFood("wwecuado_tf", "T3l3f00d!\"");
     double subTotal = 0;
     private DefaultTableModel tabla;
-    
+
     /**
      * Creates new form frmPedidos
      */
@@ -32,43 +32,23 @@ public class frmPedidos extends javax.swing.JFrame {
         initComponents();
         llenar();
     }
-    
-    public void llenar() throws Exception{
-        ArrayList<String> columnas = productos.camposTabla("PEDIDO");
+
+    public void llenar() throws Exception {
+        ArrayList<String> columnas = productos.camposTabla("Pedido");
         System.out.println(columnas);
-        
+
         DefaultTableModel tb = (DefaultTableModel) tbPedidos.getModel();
 
         for (String campo : columnas) {
             tb.addColumn(campo);
         }
-
-        ArrayList<Registro> registros = productos.listarRegistros("PEDIDO");
-
-        int i = 0;
-        for (Registro reg : registros) {
-            int j = 0;
-
-            tb.addRow(new Object[]{""});
-            for (Object dat : reg.getDatos()) {
-                tb.setValueAt(dat, i, j);
-                j++;
-            }
-
-            i++;
         
+
     }
-        
-        
-    }
-    
-    
-    
 
     public void setEnabledSiguiente(boolean estado) {
         btnSiguiente.setEnabled(estado);
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -239,17 +219,20 @@ public class frmPedidos extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(frmPedidos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+
         dispose();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-        frmFactura ventana;
-        if(jConsumidor.isSelected()){
-            ventana = new frmFactura(true,true);
-        }else{
-            ventana = new frmFactura(true,false);
+        frmFactura ventana = null;
+        try {
+            if (jConsumidor.isSelected()) {
+                ventana = new frmFactura(true, true);
+            } else {
+                ventana = new frmFactura(true, false);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
         }
         ventana.setVisible(true);
         dispose();
@@ -278,8 +261,6 @@ public class frmPedidos extends javax.swing.JFrame {
         ventana.setVisible(true);
         dispose();*/
     }//GEN-LAST:event_btnEliminarActionPerformed
-
-
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

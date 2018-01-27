@@ -10,11 +10,15 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import telefood.logica.Registro;
+import telefood.logica.TeleFood;
 
 public class frmVentasRealizadas extends javax.swing.JFrame {
 
+    TeleFood productos = new TeleFood("wwecuado_tf", "T3l3f00d!\"");
     private DefaultTableModel tabla;
 
     /**
@@ -22,6 +26,34 @@ public class frmVentasRealizadas extends javax.swing.JFrame {
      */
     public frmVentasRealizadas() {
         initComponents();
+    }
+
+    public void llenar() throws Exception {
+        ArrayList<String> columnas = productos.camposTabla("Pedido");
+        System.out.println(columnas);
+
+        DefaultTableModel tb = (DefaultTableModel) tbListaVentas.getModel();
+
+        for (String campo : columnas) {
+            tb.addColumn(campo);
+        }
+
+        ArrayList<Registro> registros = productos.listarRegistros("Pedido");
+
+        int i = 0;
+        for (Registro reg : registros) {
+            int j = 0;
+
+            tb.addRow(new Object[]{""});
+            for (Object dat : reg.getDatos()) {
+                tb.setValueAt(dat, i, j);
+                j++;
+            }
+
+            i++;
+
+        }
+
     }
 
     /**
@@ -37,7 +69,7 @@ public class frmVentasRealizadas extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableListaVentas = new javax.swing.JTable();
+        tbListaVentas = new javax.swing.JTable();
         btnAceptar = new javax.swing.JButton();
         jComboBoxFecha = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
@@ -57,7 +89,7 @@ public class frmVentasRealizadas extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/logo 2.png"))); // NOI18N
 
-        jScrollPane1.setViewportView(jTableListaVentas);
+        jScrollPane1.setViewportView(tbListaVentas);
 
         btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/aceptar.png"))); // NOI18N
         btnAceptar.setText("Aceptar");
@@ -137,9 +169,9 @@ public class frmVentasRealizadas extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
-    
+
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-       
+
     }//GEN-LAST:event_formWindowOpened
 
     private void jComboBoxFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFechaActionPerformed
@@ -189,6 +221,6 @@ public class frmVentasRealizadas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableListaVentas;
+    private javax.swing.JTable tbListaVentas;
     // End of variables declaration//GEN-END:variables
 }

@@ -24,7 +24,8 @@ public class Conexion_DB {
             String password = "T3l3f00d!\"";  
             Class.forName(driver).newInstance();
             Connection conn = DriverManager.getConnection(url+dbName,userName,password);
-            System.out.println("Todo bien.");
+            //System.out.println("Todo bien.");
+            return conn;
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
             System.out.println("Error al conectar DB");
         }/*

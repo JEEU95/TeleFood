@@ -10,19 +10,54 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import telefood.logica.Registro;
+import telefood.logica.TeleFood;
 /**
  *
  * @author dell
  */
 public class frmProductos extends javax.swing.JFrame {
+    TeleFood productos = new TeleFood("wwecuado_tf", "T3l3f00d!\"");
     
-    private DefaultTableModel tabla;
-    
-    public frmProductos() {
+    public frmProductos() throws Exception {
         initComponents();
+        llenar();
     }
+    
+    
+    public void llenar() throws Exception {
+        ArrayList<String> columnas = productos.camposTabla("Producto");
+        System.out.println(columnas);
+
+        DefaultTableModel tb = (DefaultTableModel) tbListaProductos.getModel();
+
+        for (String campo : columnas) {
+            tb.addColumn(campo);
+        }
+
+        ArrayList<Registro> registros = productos.listarRegistros("Producto");
+
+        int i = 0;
+        for (Registro reg : registros) {
+            int j = 0;
+
+            tb.addRow(new Object[]{""});
+            for (Object dat : reg.getDatos()) {
+                tb.setValueAt(dat, i, j);
+                j++;
+            }
+
+            i++;
+
+        }
+
+    }
+
      
 
     /**
@@ -41,7 +76,7 @@ public class frmProductos extends javax.swing.JFrame {
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableListaProductos = new javax.swing.JTable();
+        tbListaProductos = new javax.swing.JTable();
         btnAceptar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -72,7 +107,7 @@ public class frmProductos extends javax.swing.JFrame {
             }
         });
 
-        jScrollPane1.setViewportView(jTableListaProductos);
+        jScrollPane1.setViewportView(tbListaProductos);
 
         btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/aceptar.png"))); // NOI18N
         btnAceptar.setText("Aceptar");
@@ -190,7 +225,11 @@ public class frmProductos extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmProductos().setVisible(true);
+                try {
+                    new frmProductos().setVisible(true);
+                } catch (Exception ex) {
+                    Logger.getLogger(frmProductos.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -204,6 +243,6 @@ public class frmProductos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableListaProductos;
+    private javax.swing.JTable tbListaProductos;
     // End of variables declaration//GEN-END:variables
 }

@@ -17,7 +17,9 @@ import telefood.logica.TeleFood;
  * @author Jorge
  */
 public class frmControlPedidos extends javax.swing.JFrame {
-    TeleFood productos = new TeleFood("restadmin","a1");
+
+    TeleFood productos = new TeleFood("restadmin", "a1");
+
     /**
      * Creates new form frmControlPedidos
      */
@@ -26,18 +28,18 @@ public class frmControlPedidos extends javax.swing.JFrame {
         lblDividir.setVisible(false);
         spnCuentas.setVisible(false);
     }
-    
-    public void llenar() throws Exception{
-        ArrayList<String> columnas = productos.camposTabla("PEDIDO");
+
+    public void llenar() throws Exception {
+        ArrayList<String> columnas = productos.camposTabla("Pedido");
         System.out.println(columnas);
-        
+
         DefaultTableModel tb = (DefaultTableModel) tbPedidos.getModel();
 
         for (String campo : columnas) {
             tb.addColumn(campo);
         }
 
-        ArrayList<Registro> registros = productos.listarRegistros("PEDIDO");
+        ArrayList<Registro> registros = productos.listarRegistros("Pedido");
 
         int i = 0;
         for (Registro reg : registros) {
@@ -50,12 +52,10 @@ public class frmControlPedidos extends javax.swing.JFrame {
             }
 
             i++;
-        
+
+        }
+
     }
-        
-        
-    }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -252,7 +252,7 @@ public class frmControlPedidos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-        
+
         if (rbtnSi.isSelected()) {
             frmPedidos ventana;
             try {
@@ -261,20 +261,23 @@ public class frmControlPedidos extends javax.swing.JFrame {
             } catch (Exception ex) {
                 Logger.getLogger(frmControlPedidos.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            
+
         } else {
-            frmFactura ventana;
-            if(rbtnConsumidor.isSelected()){
-                ventana = new frmFactura(false,true);
-            }else{
-                ventana = new frmFactura(false,false);
+            frmFactura ventana = null;
+            try {
+                if (rbtnConsumidor.isSelected()) {
+                    ventana = new frmFactura(false, true);
+                } else {
+                    ventana = new frmFactura(false, false);
+                }
+            } catch (Exception e) {
+                System.out.println(e);
             }
-            
+
             ventana.setVisible(true);
         }
         dispose();
-        
+
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
     private void cmbClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbClienteActionPerformed

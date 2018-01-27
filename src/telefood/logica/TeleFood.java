@@ -15,7 +15,7 @@ public class TeleFood {
 
     //TablasDB tabla;
     
-    TeleFoodDatos tabla;
+    TeleFoodDatos tabla=null;
     ArrayList<String> f;
 
     public TeleFood(String user, String pass) {
@@ -45,8 +45,9 @@ public class TeleFood {
         ArrayList<String> campos = new ArrayList();
         //SELECT COLUMN_NAME FROM USER_TAB_COLUMNS WHERE TABLE_NAME='" + tab + "'
         f = new ArrayList();
+        
         f.add("COLUMN_NAME");
-        f.add("USER_TAB_COLUMNS");
+        f.add("INFORMATION_SCHEMA.COLUMNS");
         f.add("WHERE TABLE_NAME='" + nom + "'");
         Object o = f;
 //        ResultSet rs = tabla.consulta("COLUMN_NAME", "USER_TAB_COLUMNS", "TABLE_NAME='" + nom + "'");
@@ -144,7 +145,7 @@ public class TeleFood {
         f = new ArrayList();
         f.add("*");
         f.add(nom);
-        f.add("ORDER BY "+campos.get(0)+" ASC");
+       // f.add("ORDER BY "+campos.get(0)+" ASC");
         Object o = f;
 
         ResultSet rs = tabla.consulta(o);

@@ -13,23 +13,26 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.DefaultTableModel;
+import telefood.logica.Registro;
+import telefood.logica.TeleFood;
 
 /**
  *
  * @author dell
  */
 public class frmFactura extends javax.swing.JFrame {
-
+    TeleFood productos = new TeleFood("wwecuado_tf", "T3l3f00d!\"");
     boolean div = false;
     boolean con = false;
 
-    public frmFactura(boolean div, boolean con) {
+    public frmFactura(boolean div, boolean con) throws Exception {
         this.con = con;
         this.div = div;
         initComponents();
@@ -37,6 +40,7 @@ public class frmFactura extends javax.swing.JFrame {
         if(con){
             deshabilitar();
         }
+        llenar();
 
     }
     public static String fechaActual() {
@@ -56,6 +60,35 @@ public class frmFactura extends javax.swing.JFrame {
         txtTelefono.setText("----");
         txtCedula.setText("----");
     }
+    
+    public void llenar() throws Exception {
+        ArrayList<String> columnas = productos.camposTabla("Factura");
+        System.out.println(columnas);
+
+        DefaultTableModel tb = (DefaultTableModel) tbListaFactura.getModel();
+
+        for (String campo : columnas) {
+            tb.addColumn(campo);
+        }
+/*
+        ArrayList<Registro> registros = productos.listarRegistros("Pedido");
+
+        int i = 0;
+        for (Registro reg : registros) {
+            int j = 0;
+
+            tb.addRow(new Object[]{""});
+            for (Object dat : reg.getDatos()) {
+                tb.setValueAt(dat, i, j);
+                j++;
+            }
+
+            i++;
+
+        }*/
+
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -70,7 +103,7 @@ public class frmFactura extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableListaFactura = new javax.swing.JTable();
+        tbListaFactura = new javax.swing.JTable();
         btnAceptar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -108,7 +141,7 @@ public class frmFactura extends javax.swing.JFrame {
 
         jLabel4.setText("Dir: Av. 24 de Mayo");
 
-        jScrollPane1.setViewportView(jTableListaFactura);
+        jScrollPane1.setViewportView(tbListaFactura);
 
         btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/aceptar.png"))); // NOI18N
         btnAceptar.setText("Finalizar");
@@ -418,8 +451,8 @@ public class frmFactura extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelSubTotal;
     private javax.swing.JLabel jLabelTotal;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableListaFactura;
     private javax.swing.JLabel lblFecha;
+    private javax.swing.JTable tbListaFactura;
     private javax.swing.JTextField txtCedula;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtNombre;

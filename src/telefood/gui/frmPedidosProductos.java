@@ -13,17 +13,20 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import telefood.logica.Registro;
+import telefood.logica.TeleFood;
 
 /**
  *
  * @author dell
  */
 public class frmPedidosProductos extends javax.swing.JFrame {
-
+    TeleFood productos = new TeleFood("wwecuado_tf", "T3l3f00d!\"");
     frmPedidos ventana;
     
     public frmPedidosProductos() throws Exception {
@@ -31,6 +34,36 @@ public class frmPedidosProductos extends javax.swing.JFrame {
 
         initComponents();
     }
+    
+    
+    public void llenar() throws Exception {
+        ArrayList<String> columnas = productos.camposTabla("Pedido");
+        System.out.println(columnas);
+
+        DefaultTableModel tb = (DefaultTableModel) tbModificarProductos.getModel();
+
+        for (String campo : columnas) {
+            tb.addColumn(campo);
+        }
+
+        ArrayList<Registro> registros = productos.listarRegistros("Pedido");
+
+        int i = 0;
+        for (Registro reg : registros) {
+            int j = 0;
+
+            tb.addRow(new Object[]{""});
+            for (Object dat : reg.getDatos()) {
+                tb.setValueAt(dat, i, j);
+                j++;
+            }
+
+            i++;
+
+        }
+
+    }
+
     
 
     /**
@@ -45,7 +78,7 @@ public class frmPedidosProductos extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jMensaje = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableModificarProductos = new javax.swing.JTable();
+        tbModificarProductos = new javax.swing.JTable();
         jTextCantidad = new javax.swing.JTextField();
         jLabelCantidad = new javax.swing.JLabel();
         jLabelDescuento = new javax.swing.JLabel();
@@ -63,7 +96,7 @@ public class frmPedidosProductos extends javax.swing.JFrame {
         jMensaje.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jMensaje.setText("Señale un producto:");
 
-        jScrollPane1.setViewportView(jTableModificarProductos);
+        jScrollPane1.setViewportView(tbModificarProductos);
 
         jTextCantidad.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextCantidad.setText("1");
@@ -229,8 +262,8 @@ public class frmPedidosProductos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelPorcentaje;
     private javax.swing.JLabel jMensaje;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableModificarProductos;
     private javax.swing.JTextField jTextCantidad;
     private javax.swing.JTextField jTextDescuento;
+    private javax.swing.JTable tbModificarProductos;
     // End of variables declaration//GEN-END:variables
 }
