@@ -5,15 +5,15 @@
  */
 package telefood.gui;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 import telefood.logica.Registro;
 import telefood.logica.TeleFood;
@@ -23,13 +23,34 @@ import telefood.logica.TeleFood;
  * @author dell
  */
 public class frmProductos extends javax.swing.JFrame {
+    
+    int columna, fila, id;
+    Registro registroPaso = new Registro();
+    boolean isChanging = false;
+    boolean primeraVez = true;
 
-    TeleFood productos = null;
+    static TeleFood productos = null;
 
     public frmProductos(TeleFood productos) throws Exception {
         initComponents();
         this.productos = productos;
         llenar();
+        tbListaProductos.getSelectionModel().addListSelectionListener(
+                (ListSelectionEvent e) -> {
+                    if (!tbListaProductos.getSelectionModel().isSelectionEmpty()) {
+                        btnEditar.setEnabled(true);
+                        registroPaso.getDatos().clear();
+                        
+                        for (int i=0; i<tbListaProductos.getColumnCount(); i++) {
+                            registroPaso.setDatos(tbListaProductos.getValueAt(
+                                    tbListaProductos.getSelectedRow(), i));
+                        }
+                        
+                    } else {
+                        btnEditar.setEnabled(false);
+                    }
+                }
+        );
     }
 
     public void llenar() throws Exception {
@@ -48,17 +69,19 @@ public class frmProductos extends javax.swing.JFrame {
         int i = 0;
         for (Registro reg : registros) {
             int j = 0;
-
+            
             tb.addRow(new Object[]{""});
             for (Object dat : reg.getDatos()) {
                 tb.setValueAt(dat, i, j);
                 j++;
             }
-
+            
             i++;
-
         }
-
+        labelCargando.setVisible(false);
+        labelImageCargando.setVisible(false);
+        revalidate();
+        repaint();
     }
 
     /**
@@ -77,8 +100,18 @@ public class frmProductos extends javax.swing.JFrame {
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbListaProductos = new javax.swing.JTable();
+        tbListaProductos = new javax.swing.JTable(){private static final long serialVersionUID = 1L;
+
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            };
+        };
         btnAceptar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        labelCargando = new javax.swing.JLabel();
+        URL url = getClass().getResource("/telefood/gui/img/loading_circle.gif");
+        ImageIcon imageIcon = new ImageIcon(url);
+        labelImageCargando = new javax.swing.JLabel(imageIcon);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -108,6 +141,8 @@ public class frmProductos extends javax.swing.JFrame {
             }
         });
 
+        tbListaProductos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tbListaProductos.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tbListaProductos);
 
         btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/aceptar.png"))); // NOI18N
@@ -118,12 +153,33 @@ public class frmProductos extends javax.swing.JFrame {
             }
         });
 
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/edit.png"))); // NOI18N
+        btnEditar.setText("Editar");
+        btnEditar.setEnabled(false);
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+
+        labelCargando.setText("Cargando...");
+        labelCargando.setOpaque(true);
+
+        labelImageCargando.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/loading_circle.gif"))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(265, 265, 265)
+                        .addComponent(btnAceptar)
+                        .addGap(70, 70, 70)
+                        .addComponent(labelCargando)
+                        .addGap(18, 18, 18)
+                        .addComponent(labelImageCargando))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel1)
@@ -135,17 +191,15 @@ public class frmProductos extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addContainerGap()
                             .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(btnAgregar)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnEditar)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(btnEliminar))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(265, 265, 265)
-                                .addComponent(btnAceptar))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -163,11 +217,16 @@ public class frmProductos extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(btnEliminar)
-                    .addComponent(btnAgregar))
+                    .addComponent(btnAgregar)
+                    .addComponent(btnEditar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnAceptar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(labelImageCargando, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnAceptar)
+                        .addComponent(labelCargando)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -176,10 +235,29 @@ public class frmProductos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        
         frmNuevoProducto ventana = new frmNuevoProducto(productos);
+        tbListaProductos.clearSelection();
+        ventana.addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                labelImageCargando.setVisible(true);
+                    //To change body of generated methods, choose Tools | Templates.
+                    java.awt.EventQueue.invokeLater(new Runnable() {
+                        public void run() {
+                            try {
+                                llenar();
+                            } catch (Exception ex) {
+                                System.err.println("Error: " + ex.getMessage());
+                            }
+                        }
+                    });
+            }
+            
+        });
 
         ventana.setVisible(true);
-
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -213,16 +291,44 @@ public class frmProductos extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+        frmEditarProducto ventana = new frmEditarProducto(productos, registroPaso);
+        tbListaProductos.clearSelection();
+        ventana.addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                labelImageCargando.setVisible(true);
+                    //To change body of generated methods, choose Tools | Templates.
+                    java.awt.EventQueue.invokeLater(new Runnable() {
+                        public void run() {
+                            try {
+                                llenar();
+                            } catch (Exception ex) {
+                                System.err.println("Error: " + ex.getMessage());
+                            }
+                        }
+                    });
+            }
+            
+        });
+        ventana.setVisible(true);
+    }//GEN-LAST:event_btnEditarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelCargando;
+    private javax.swing.JLabel labelImageCargando;
     private javax.swing.JTable tbListaProductos;
     // End of variables declaration//GEN-END:variables
 }

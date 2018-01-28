@@ -108,7 +108,7 @@ public class TeleFood {
         f.add(editar);
         f.add(claves);
         Object o = f;
-
+        
         tabla.modificar(o);
     }
 

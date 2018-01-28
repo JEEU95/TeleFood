@@ -4,23 +4,53 @@ import telefood.logica.FTPUploader;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import telefood.logica.Registro;
 import telefood.logica.TeleFood;
 
-public class frmNuevoProducto extends javax.swing.JFrame {
+public class frmEditarProducto extends javax.swing.JFrame {
+    
+    ArrayList<Object> datos = new ArrayList();
+    int productoId;
+    String uniqueImage = null;
 
     TeleFood producto = null;
     frmProductos ventana = null;
 
-    public frmNuevoProducto(TeleFood producto) {
+    public frmEditarProducto(TeleFood producto, Registro registro) {
         this.producto=producto;
+        this.datos = registro.getDatos();
         initComponents();
+        
+        productoId = Integer.valueOf(datos.get(0).toString());
+        if (datos.get(1) != null) {
+            if (!datos.get(1).toString().equals("")) {
+                uniqueImage = datos.get(1).toString();
+            }
+            txtImagePath.setText(uniqueImage);
+        }
+        txtProducto.setText(datos.get(2).toString());
+        txtCosto.setText(datos.get(3).toString());
+        
+        if (Integer.valueOf(datos.get(4).toString())==0){
+            jRadioNo.setSelected(true);
+            jRadioSi.setSelected(false);
+        } else {
+            jRadioSi.setSelected(true);
+            jRadioNo.setSelected(false);
+        }
+        
+        if (Integer.valueOf(datos.get(5).toString())==0){
+            cmbCategoria.setSelectedIndex(0);
+        } else {
+            cmbCategoria.setSelectedIndex(1);
+        }
+        
+        
     }
 
     /**
@@ -50,8 +80,8 @@ public class frmNuevoProducto extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         txtImagePath = new javax.swing.JTextField();
         btnPickImage = new javax.swing.JButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        jRadioNo = new javax.swing.JRadioButton();
+        jRadioSi = new javax.swing.JRadioButton();
 
         jFileChooser1.setCurrentDirectory(new File
             (System.getProperty("user.home") + System.getProperty("file.separator")+ "Pictures"));
@@ -111,18 +141,18 @@ public class frmNuevoProducto extends javax.swing.JFrame {
         }
     });
 
-    jRadioButton1.setSelected(true);
-    jRadioButton1.setText("No");
-    jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+    jRadioNo.setSelected(true);
+    jRadioNo.setText("No");
+    jRadioNo.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jRadioButton1ActionPerformed(evt);
+            jRadioNoActionPerformed(evt);
         }
     });
 
-    jRadioButton2.setText("Sí");
-    jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+    jRadioSi.setText("Sí");
+    jRadioSi.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jRadioButton2ActionPerformed(evt);
+            jRadioSiActionPerformed(evt);
         }
     });
 
@@ -175,9 +205,9 @@ public class frmNuevoProducto extends javax.swing.JFrame {
                                     .addComponent(txtProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
                                     .addComponent(txtCosto)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jRadioButton2)
+                                        .addComponent(jRadioSi)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jRadioButton1))))))
+                                        .addComponent(jRadioNo))))))
                     .addGap(15, 15, 15))))
     );
     layout.setVerticalGroup(
@@ -215,8 +245,8 @@ public class frmNuevoProducto extends javax.swing.JFrame {
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jLabel6)
-                .addComponent(jRadioButton1)
-                .addComponent(jRadioButton2))
+                .addComponent(jRadioNo)
+                .addComponent(jRadioSi))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -233,21 +263,33 @@ public class frmNuevoProducto extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         
-        String unique = null;
+        
         boolean imagen = false;
-
-        if (!txtImagePath.getText().equals("")) {
-            File file = new File(txtImagePath.getText());
-            try {
-                FTPUploader ftpUploader = new FTPUploader("ftp.wwecuador.com", "wwecuado_ft@wwecuador.com", "T3l3f00d!\"");
-                String extension = file.getName().substring(file.getName().indexOf("."));
-                unique = UUID.randomUUID().toString() + extension;
-                System.out.println(unique);
-                ftpUploader.uploadFile(file.getPath(), unique, "");
-                ftpUploader.disconnect();
-                imagen = true;
-            } catch (Exception ex) {
-                System.err.println("Error subiendo imagen: " + ex.getMessage());
+        
+        if(uniqueImage==null){
+            if (!txtImagePath.getText().equals("")) {
+                File file = new File(txtImagePath.getText());
+                try {
+                    FTPUploader ftpUploader = new FTPUploader("ftp.wwecuador.com", "wwecuado_ft@wwecuador.com", "T3l3f00d!\"");
+                    String extension = file.getName().substring(file.getName().indexOf("."));
+                    uniqueImage = UUID.randomUUID().toString() + extension;
+                    ftpUploader.uploadFile(file.getPath(), uniqueImage, "");
+                    ftpUploader.disconnect();
+                    imagen = true;
+                } catch (Exception ex) {
+                    System.err.println("Error subiendo imagen: " + ex.getMessage());
+                }
+            }
+        } else {
+            if (txtImagePath.getText().contains("\\")) {
+                File file = new File(txtImagePath.getText());
+                try {
+                    FTPUploader ftpUploader = new FTPUploader("ftp.wwecuador.com", "wwecuado_ft@wwecuador.com", "T3l3f00d!\"");
+                    ftpUploader.uploadFile(file.getPath(), uniqueImage, "");
+                    ftpUploader.disconnect();
+                } catch (Exception ex) {
+                    System.err.println("Error subiendo imagen: " + ex.getMessage());
+                }
             }
         }
 
@@ -256,50 +298,53 @@ public class frmNuevoProducto extends javax.swing.JFrame {
         campos = new String[] {"ProductoId", "Imagen", "Nombre", "Precio", 
             "EstaEnOferta", "Tipo"};
         int tipo = 0;
-        reg.setDatos("DEFAULT");
-        
-        if (imagen){
-            reg.setDatos(unique);
-        } else {
-            reg.setDatos(null);
-        }
-        
+        reg.setDatos(productoId);
+        reg.setDatos(uniqueImage);
         reg.setDatos(txtProducto.getText());
         reg.setDatos(txtCosto.getText());
         
-        if (jRadioButton1.isSelected()){
-            reg.setDatos(1);
-        } else {
+        if (jRadioNo.isSelected()){
             reg.setDatos(0);
+        } else {
+            reg.setDatos(1);
         }
-
+        
         if (cmbCategoria.getSelectedItem().equals("Comida")) {
             tipo = 1;
         }
         reg.setDatos(tipo);
+        
+        ArrayList<String> camposEditados = new ArrayList<>();
+        if (reg.getDatos().get(1)==null){
+            camposEditados.add("Imagen=NULL");
+        } else {
+            camposEditados.add("Imagen='"+reg.getDatos().get(1).toString()+"'");
+        }
+        camposEditados.add("Nombre='"+reg.getDatos().get(2).toString()+"'");
+        camposEditados.add("Precio="+reg.getDatos().get(3).toString());
+        camposEditados.add("EstaEnOferta="+reg.getDatos().get(4).toString());
+        camposEditados.add("Tipo="+reg.getDatos().get(5).toString());
+        
+        ArrayList<String> claves = new ArrayList<>();
+        claves.add("ProductoId="+reg.getDatos().get(0).toString());
 
         try {
-            producto.insertarDatos("Producto", reg);
+            producto.editarDatos("Producto", claves, camposEditados);
             dispose();
         } catch (Exception ex) {
-            Logger.getLogger(frmNuevoProducto.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error: " + ex.getMessage());
         }
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        try {
-
-            dispose();
-        } catch (Exception ex) {
-            Logger.getLogger(frmNuevoProducto.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnPickImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPickImageActionPerformed
         // TODO add your handling code here:
         //Handle open button action.
-        int returnVal = jFileChooser1.showOpenDialog(frmNuevoProducto.this);
+        int returnVal = jFileChooser1.showOpenDialog(frmEditarProducto.this);
 
         if (returnVal == jFileChooser1.APPROVE_OPTION) {
             File file = jFileChooser1.getSelectedFile();
@@ -324,7 +369,7 @@ public class frmNuevoProducto extends javax.swing.JFrame {
 
     private void txtImagePathMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtImagePathMouseClicked
         // TODO add your handling code here:
-        int returnVal = jFileChooser1.showOpenDialog(frmNuevoProducto.this);
+        int returnVal = jFileChooser1.showOpenDialog(frmEditarProducto.this);
 
         if (returnVal == jFileChooser1.APPROVE_OPTION) {
             File file = jFileChooser1.getSelectedFile();
@@ -347,22 +392,17 @@ public class frmNuevoProducto extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtImagePathMouseClicked
 
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+    private void jRadioSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioSiActionPerformed
         // TODO add your handling code here:
-        jRadioButton1.setSelected(false);
-        jRadioButton2.setSelected(true);
-    }//GEN-LAST:event_jRadioButton2ActionPerformed
+        jRadioNo.setSelected(false);
+        jRadioSi.setSelected(true);
+    }//GEN-LAST:event_jRadioSiActionPerformed
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void jRadioNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioNoActionPerformed
         // TODO add your handling code here:
-        jRadioButton1.setSelected(true);
-        jRadioButton2.setSelected(false);
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    
+        jRadioNo.setSelected(true);
+        jRadioSi.setSelected(false);
+    }//GEN-LAST:event_jRadioNoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
@@ -378,8 +418,8 @@ public class frmNuevoProducto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioNo;
+    private javax.swing.JRadioButton jRadioSi;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField txtCosto;

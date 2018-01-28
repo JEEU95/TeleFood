@@ -30,7 +30,7 @@ public class TeleFoodDatos extends Conexion_DB {
             System.out.println("INSERT INTO " + com.get(0) + " VALUES(" + com.get(1) + ")");
             PreparedStatement pst = cnx.prepareStatement("INSERT INTO " + com.get(0) + " VALUES(" + com.get(1) + ")");
             pst.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error al registrar TeleFoodDatos");
         } 
 
@@ -46,7 +46,7 @@ public class TeleFoodDatos extends Conexion_DB {
             PreparedStatement pst = cnx.prepareStatement("UPDATE " + com.get(0) + " SET " + com.get(1) + " WHERE " + com.get(2));
 
             pst.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error al modificar TeleFoodDatos");
         } 
     }
@@ -63,7 +63,7 @@ public class TeleFoodDatos extends Conexion_DB {
             pst.executeUpdate();
             
             System.out.println("Dato Actualizado");
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error al eliminar TeleFoodDatos");
         } 
     }
