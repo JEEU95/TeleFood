@@ -14,14 +14,16 @@ public class frmPedidos extends javax.swing.JFrame {
 
     TeleFood pedidos = null;
     double subTotal = 0;
+    int num=0;
     private DefaultTableModel tabla;
 
     /**
      * Creates new form frmPedidos
      */
-    public frmPedidos(TeleFood pedidos) throws Exception {
+    public frmPedidos(int num,TeleFood pedidos) throws Exception {
         initComponents();
         this.pedidos=pedidos;
+        this.num=num;
         llenar();
     }
 
@@ -206,7 +208,7 @@ public class frmPedidos extends javax.swing.JFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         frmPedidosProductos ventana;
         try {
-            ventana = new frmPedidosProductos(pedidos);
+            ventana = new frmPedidosProductos(num,pedidos);
             ventana.setVisible(true);
         } catch (Exception ex) {
             Logger.getLogger(frmPedidos.class.getName()).log(Level.SEVERE, null, ex);
@@ -219,9 +221,10 @@ public class frmPedidos extends javax.swing.JFrame {
         frmFactura ventana = null;
         try {
             if (jConsumidor.isSelected()) {
-                ventana = new frmFactura(true, true,pedidos);
+                ventana = new frmFactura(num, true,pedidos);
+              
             } else {
-                ventana = new frmFactura(true, false,pedidos);
+                ventana = new frmFactura(num, false,pedidos);
             }
         } catch (Exception e) {
             System.out.println(e);

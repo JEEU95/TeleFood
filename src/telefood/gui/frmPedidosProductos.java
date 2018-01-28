@@ -18,14 +18,14 @@ import telefood.logica.TeleFood;
 public class frmPedidosProductos extends javax.swing.JFrame {
     TeleFood ped_pro = null;
     frmPedidos ventana;
+    int num=0;
     
-    public frmPedidosProductos(TeleFood ped_pro) throws Exception {
+    public frmPedidosProductos(int num,TeleFood ped_pro) throws Exception {
         this.ped_pro=ped_pro;
-        this.ventana = new frmPedidos(ped_pro);
+        this.ventana = new frmPedidos(num,ped_pro);
 
         initComponents();
     }
-    
     
     public void llenar() throws Exception {
         ArrayList<String> columnas = ped_pro.camposTabla("Pedido");

@@ -20,16 +20,16 @@ import telefood.logica.TeleFood;
 public class frmFactura extends javax.swing.JFrame {
 
     TeleFood pedidos = null;
-    boolean div = false;
-    boolean con = false;
+    int div;
+    boolean consumidor = false;
 
-    public frmFactura(boolean div, boolean con, TeleFood pedidos) throws Exception {
-        this.con = con;
+    public frmFactura(int div, boolean consumidor, TeleFood pedidos) throws Exception {
+        this.consumidor = consumidor;
         this.div = div;
         this.pedidos = pedidos;
         initComponents();
         lblFecha.setText(fechaActual());
-        if (con) {
+        if (consumidor) {
             deshabilitar();
         }
         llenar();
@@ -351,8 +351,21 @@ public class frmFactura extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        frmMenu ventana = new frmMenu(pedidos);
-        ventana.setVisible(true);
+        div--;
+        
+        System.out.println("*************"+div);
+        if (div == 0) {
+            frmMenu ventana = new frmMenu(pedidos);
+            ventana.setVisible(true);
+
+        } else {
+            try {
+                frmPedidos ventana = new frmPedidos(div, pedidos);
+                ventana.setVisible(true);
+            } catch (Exception ex) {
+                Logger.getLogger(frmFactura.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -372,10 +385,10 @@ public class frmFactura extends javax.swing.JFrame {
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
         try {
-            if (div) {
+            if (div>1) {
                 frmPedidos ventana;
 
-                ventana = new frmPedidos(pedidos);
+                ventana = new frmPedidos(div,pedidos);
                 ventana.setVisible(true);
 
             } else {

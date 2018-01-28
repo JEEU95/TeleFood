@@ -295,11 +295,11 @@ public class frmControlPedidos extends javax.swing.JFrame {
 
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-
+        int i = (Integer) spnCuentas.getValue();
         if (rbtnSi.isSelected()) {
             frmPedidos ventana;
             try {
-                ventana = new frmPedidos(pedidos);
+                ventana = new frmPedidos(i,pedidos);
                 ventana.setVisible(true);
             } catch (Exception ex) {
                 Logger.getLogger(frmControlPedidos.class.getName()).log(Level.SEVERE, null, ex);
@@ -309,9 +309,9 @@ public class frmControlPedidos extends javax.swing.JFrame {
             frmFactura ventana = null;
             try {
                 if (rbtnConsumidor.isSelected()) {
-                    ventana = new frmFactura(false, true, pedidos);
+                    ventana = new frmFactura(1, true, pedidos);
                 } else {
-                    ventana = new frmFactura(false, false, pedidos);
+                    ventana = new frmFactura(1, false, pedidos);
                 }
             } catch (Exception e) {
                 System.out.println(e);
