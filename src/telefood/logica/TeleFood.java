@@ -112,18 +112,34 @@ public class TeleFood {
         tabla.modificar(o);
     }
 
-    public ArrayList<Registro> listarRegistros(String nom) throws SQLException, Exception {
+    public ArrayList<Registro> listarRegistros(Object o) throws SQLException, Exception {
         /*
         Lista el registro completo
         */
-        
-        ArrayList<Registro> reg = new ArrayList();
+        ArrayList<String> parametros = (ArrayList) o;
+        String nom= parametros.get(0);
         ArrayList<String> campos = camposTabla(nom);
         f = new ArrayList();
         f.add("*");
         f.add(nom);
-        Object o = f;
-        ResultSet rs = tabla.consulta(o);
+        System.out.println("Registro de:"+f);
+        try{
+            String con = parametros.get(1);
+            f.add(con);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        ArrayList<Registro> reg = new ArrayList();
+        
+
+        for (String c:campos) {
+            System.out.println(c);
+        }
+        System.out.println(f);
+        Object obj = f;
+
+        ResultSet rs = tabla.consulta(obj);
+        System.out.println("-------------------");
         while (rs.next()) {
             Registro datos = new Registro();//Creacion de un nuevo objeto Registro
             //leer celda por celda y almacenar los datos en el objeto

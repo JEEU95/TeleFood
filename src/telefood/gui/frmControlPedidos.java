@@ -56,6 +56,7 @@ public class frmControlPedidos extends javax.swing.JFrame {
         rbtnConsumidor = new javax.swing.JRadioButton();
         jLabel6 = new javax.swing.JLabel();
         spnCuentas = new javax.swing.JSpinner();
+        btnActualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -127,6 +128,14 @@ public class frmControlPedidos extends javax.swing.JFrame {
 
         spnCuentas.setModel(new javax.swing.SpinnerNumberModel(2, 2, null, 1));
 
+        btnActualizar.setBackground(new java.awt.Color(153, 255, 153));
+        btnActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/actualizar.png"))); // NOI18N
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -141,7 +150,9 @@ public class frmControlPedidos extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
-                                .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnActualizar))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -173,9 +184,9 @@ public class frmControlPedidos extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(rbtnFactura)
                             .addComponent(rbtnConsumidor))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 142, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
                         .addComponent(btnSiguiente)))
-                .addGap(48, 48, 48))
+                .addGap(61, 61, 61))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,12 +201,14 @@ public class frmControlPedidos extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel3)))
-                        .addGap(26, 26, 26))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addGap(9, 9, 9)))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnActualizar, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cmbCliente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -296,30 +309,34 @@ public class frmControlPedidos extends javax.swing.JFrame {
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
         int i = (Integer) spnCuentas.getValue();
+        
         if (rbtnSi.isSelected()) {
             frmPedidos ventana;
             try {
                 ventana = new frmPedidos(i,pedidos);
                 ventana.setVisible(true);
+                dispose();
             } catch (Exception ex) {
                 Logger.getLogger(frmControlPedidos.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         } else {
-            frmFactura ventana = null;
+            frmFactura ventana;
             try {
                 if (rbtnConsumidor.isSelected()) {
                     ventana = new frmFactura(1, true, pedidos);
                 } else {
                     ventana = new frmFactura(1, false, pedidos);
                 }
+                ventana.setVisible(true);
+                dispose();
             } catch (Exception e) {
                 System.out.println(e);
             }
 
-            ventana.setVisible(true);
+            
         }
-        dispose();
+        
 
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
@@ -361,7 +378,12 @@ public class frmControlPedidos extends javax.swing.JFrame {
         rbtnConsumidor.setSelected(true);
     }//GEN-LAST:event_rbtnConsumidorActionPerformed
 
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnSiguiente;
     private javax.swing.JComboBox<String> cmbCliente;
     private javax.swing.JLabel jLabel1;

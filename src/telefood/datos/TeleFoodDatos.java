@@ -71,6 +71,7 @@ public class TeleFoodDatos extends Conexion_DB {
     public ResultSet consulta(Object o) throws Exception {
         //com contiene (campos, nombre de la tabla y condiciones) para realizar la consulta
         com = (ArrayList<String>) o;
+        System.out.println("////////////"+com);
         String condicion = "";
         
         //se controla el error en caso de que no se envie una condicion
