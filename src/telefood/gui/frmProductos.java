@@ -9,8 +9,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
@@ -242,17 +240,16 @@ public class frmProductos extends javax.swing.JFrame {
         {
             @Override
             public void windowClosed(WindowEvent e) {
+                labelCargando.setVisible(true);
                 labelImageCargando.setVisible(true);
                     //To change body of generated methods, choose Tools | Templates.
-                    java.awt.EventQueue.invokeLater(new Runnable() {
-                        public void run() {
-                            try {
-                                llenar();
-                            } catch (Exception ex) {
-                                System.err.println("Error: " + ex.getMessage());
-                            }
+                    java.awt.EventQueue.invokeLater(() -> {
+                        try {
+                            llenar();
+                        } catch (Exception ex) {
+                            System.err.println("Error: " + ex.getMessage());
                         }
-                    });
+                });
             }
             
         });
@@ -299,17 +296,16 @@ public class frmProductos extends javax.swing.JFrame {
         {
             @Override
             public void windowClosed(WindowEvent e) {
+                labelCargando.setVisible(true);
                 labelImageCargando.setVisible(true);
                     //To change body of generated methods, choose Tools | Templates.
-                    java.awt.EventQueue.invokeLater(new Runnable() {
-                        public void run() {
-                            try {
-                                llenar();
-                            } catch (Exception ex) {
-                                System.err.println("Error: " + ex.getMessage());
-                            }
+                    java.awt.EventQueue.invokeLater(() -> {
+                        try {
+                            llenar();
+                        } catch (Exception ex) {
+                            System.err.println("Error: " + ex.getMessage());
                         }
-                    });
+                });
             }
             
         });

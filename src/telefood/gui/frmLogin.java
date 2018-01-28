@@ -3,7 +3,6 @@ package telefood.gui;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.sql.Connection;
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import telefood.datos.Conexion_DB;
 import telefood.logica.TeleFood;
