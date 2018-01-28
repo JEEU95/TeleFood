@@ -283,12 +283,30 @@ public class frmEditarProducto extends javax.swing.JFrame {
         } else {
             if (txtImagePath.getText().contains("\\")) {
                 File file = new File(txtImagePath.getText());
-                try {
-                    FTPUploader ftpUploader = new FTPUploader("ftp.wwecuador.com", "wwecuado_ft@wwecuador.com", "T3l3f00d!\"");
-                    ftpUploader.uploadFile(file.getPath(), uniqueImage, "");
-                    ftpUploader.disconnect();
-                } catch (Exception ex) {
-                    System.err.println("Error subiendo imagen: " + ex.getMessage());
+                String extensionAntigua = uniqueImage.substring(uniqueImage
+                        .indexOf("."));
+                String extensionNueva = file.getName().substring(file.getName()
+                        .indexOf("."));
+                
+                if (extensionAntigua.equalsIgnoreCase(extensionNueva)){
+                    try {
+                        FTPUploader ftpUploader = new FTPUploader("ftp.wwecuador.com", "wwecuado_ft@wwecuador.com", "T3l3f00d!\"");
+                        ftpUploader.uploadFile(file.getPath(), uniqueImage, "");
+                        ftpUploader.disconnect();
+                    } catch (Exception ex) {
+                        System.err.println("Error subiendo imagen: " + ex.getMessage());
+                    }
+                } else {
+                    uniqueImage = uniqueImage.substring(0, uniqueImage
+                            .indexOf(".")).concat(extensionNueva);
+                    System.out.println(uniqueImage);
+                    try {
+                        FTPUploader ftpUploader = new FTPUploader("ftp.wwecuador.com", "wwecuado_ft@wwecuador.com", "T3l3f00d!\"");
+                        ftpUploader.uploadFile(file.getPath(), uniqueImage, "");
+                        ftpUploader.disconnect();
+                    } catch (Exception ex) {
+                        System.err.println("Error subiendo imagen: " + ex.getMessage());
+                    }
                 }
             }
         }
