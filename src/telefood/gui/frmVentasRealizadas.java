@@ -24,9 +24,40 @@ public class frmVentasRealizadas extends javax.swing.JFrame {
     /**
      * Creates new form frmVentasRealizadas
      */
-    public frmVentasRealizadas(TeleFood ventas) {
+    public frmVentasRealizadas(TeleFood ventas) throws Exception {
         initComponents();
         this.ventas=ventas;
+        llenar();
+    }
+    
+    
+    public void llenar() throws Exception {
+        ArrayList<String> columnas = ventas.camposTabla("Factura");
+        System.out.println(columnas);
+
+        DefaultTableModel tb = (DefaultTableModel) tbListaVentas.getModel();
+        tb.setColumnCount(0);
+        tb.setRowCount(0);
+        for (String campo : columnas) {
+            tb.addColumn(campo);
+        }
+
+        ArrayList<Registro> registros = ventas.listarRegistros("Factura");
+
+        int i = 0;
+        for (Registro reg : registros) {
+            int j = 0;
+
+            tb.addRow(new Object[]{""});
+            for (Object dat : reg.getDatos()) {
+                tb.setValueAt(dat, i, j);
+                j++;
+            }
+
+            i++;
+
+        }
+
     }
 
 

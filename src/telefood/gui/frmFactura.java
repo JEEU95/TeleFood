@@ -28,30 +28,32 @@ import telefood.logica.TeleFood;
  * @author dell
  */
 public class frmFactura extends javax.swing.JFrame {
+
     TeleFood pedidos = null;
     boolean div = false;
     boolean con = false;
 
-    public frmFactura(boolean div, boolean con,TeleFood pedidos) throws Exception {
+    public frmFactura(boolean div, boolean con, TeleFood pedidos) throws Exception {
         this.con = con;
         this.div = div;
-        this.pedidos=pedidos;
+        this.pedidos = pedidos;
         initComponents();
         lblFecha.setText(fechaActual());
-        if(con){
+        if (con) {
             deshabilitar();
         }
         llenar();
 
     }
+
     public static String fechaActual() {
         Date fecha = new Date();
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/YY");
         return formatoFecha.format(fecha);
 
     }
-    
-    public void deshabilitar(){
+
+    public void deshabilitar() {
         txtCedula.setEnabled(false);
         txtDireccion.setEnabled(false);
         txtNombre.setEnabled(false);
@@ -61,7 +63,7 @@ public class frmFactura extends javax.swing.JFrame {
         txtTelefono.setText("----");
         txtCedula.setText("----");
     }
-    
+
     public void llenar() throws Exception {
         ArrayList<String> columnas = pedidos.camposTabla("Factura");
         System.out.println(columnas);
@@ -71,7 +73,7 @@ public class frmFactura extends javax.swing.JFrame {
         for (String campo : columnas) {
             tb.addColumn(campo);
         }
-/*
+        /*
         ArrayList<Registro> registros = pedidos.listarRegistros("Pedido");
 
         int i = 0;
@@ -89,7 +91,6 @@ public class frmFactura extends javax.swing.JFrame {
         }*/
 
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -380,21 +381,23 @@ public class frmFactura extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
+        try {
+            if (div) {
+                frmPedidos ventana;
 
-        if (div) {
-            frmPedidos ventana;
-            try {
                 ventana = new frmPedidos(pedidos);
                 ventana.setVisible(true);
-            } catch (Exception ex) {
-                Logger.getLogger(frmFactura.class.getName()).log(Level.SEVERE, null, ex);
+
+            } else {
+
+                frmControlPedidos ventana = new frmControlPedidos(pedidos);
+                ventana.setVisible(true);
+
             }
-            
-        } else {
-            frmControlPedidos ventana = new frmControlPedidos(pedidos);
-            ventana.setVisible(true);
+            dispose();
+        } catch (Exception ex) {
+            Logger.getLogger(frmFactura.class.getName()).log(Level.SEVERE, null, ex);
         }
-        dispose();
     }//GEN-LAST:event_btnAtrasActionPerformed
 
 

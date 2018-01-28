@@ -28,7 +28,7 @@ public class frmProductos extends javax.swing.JFrame {
 
     public frmProductos(TeleFood productos) throws Exception {
         initComponents();
-        this.productos=productos;
+        this.productos = productos;
         llenar();
     }
 
@@ -37,7 +37,8 @@ public class frmProductos extends javax.swing.JFrame {
         System.out.println(columnas);
 
         DefaultTableModel tb = (DefaultTableModel) tbListaProductos.getModel();
-
+        tb.setColumnCount(0);
+        tb.setRowCount(0);
         for (String campo : columnas) {
             tb.addColumn(campo);
         }
@@ -178,7 +179,7 @@ public class frmProductos extends javax.swing.JFrame {
         frmNuevoProducto ventana = new frmNuevoProducto(productos);
 
         ventana.setVisible(true);
-        
+
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -197,11 +198,8 @@ public class frmProductos extends javax.swing.JFrame {
 
             int res = JOptionPane.showConfirmDialog(rootPane, "Esta seguro que desea eliminar:\n" + reg.getDatos(), "ELIMINAR (CONFIRMACION)", 0);
             if (res == 0) {
-                
-
-                
                 productos.eliminarDatos("Producto", camposClave);
-                System.out.println("Dato Eliminado");
+                llenar();
             }
 
         } catch (Exception ex) {
@@ -215,7 +213,7 @@ public class frmProductos extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
-   
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnAgregar;

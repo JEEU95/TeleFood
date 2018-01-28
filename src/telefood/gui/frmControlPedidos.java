@@ -18,18 +18,19 @@ import telefood.logica.TeleFood;
  */
 public class frmControlPedidos extends javax.swing.JFrame {
 
-    TeleFood pedidos=null;
+    TeleFood pedidos = null;
 
     /**
      * Creates new form frmControlPedidos
      */
-    public frmControlPedidos(TeleFood pedidos) {
+    public frmControlPedidos(TeleFood pedidos) throws Exception {
         initComponents();
-        this.pedidos= pedidos;
+        this.pedidos = pedidos;
         lblDividir.setVisible(false);
         spnCuentas.setVisible(false);
+        llenar();
+        llenarTabla();
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -76,7 +77,6 @@ public class frmControlPedidos extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/logo 2.png"))); // NOI18N
 
-        cmbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "M1", "M2", "M3", "M4", "B1", "B2", "B3", "B4", " " }));
         cmbCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbClienteActionPerformed(evt);
@@ -225,6 +225,75 @@ public class frmControlPedidos extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    public void llenar() throws Exception {
+        ArrayList<String> columnas = pedidos.camposTabla("Pedido");
+        ArrayList<String> campos = new ArrayList();
+        System.out.println(columnas);
+
+        DefaultTableModel tb = (DefaultTableModel) tbPedidos.getModel();
+        tb.setColumnCount(0);
+        tb.setRowCount(0);
+        int nc = 0;
+        for (String campo : columnas) {
+            nc++;
+            if (nc > 2) {
+
+                tb.addColumn(campo);
+            }
+        }
+        campos.add("DesdeId");
+
+        Registro reg = new Registro();
+
+        reg.setDatos(campos);
+        reg.setDatos("Pedido");
+
+        Object o = (Object) reg;
+
+        ArrayList<Registro> registros = pedidos.listarDatos(o);
+
+        for (Registro r : registros) {
+            for (Object dat : r.getDatos()) {
+                cmbCliente.addItem(dat.toString());
+            }
+        }
+    }
+
+    public void llenarTabla() throws Exception {
+
+        ArrayList<String> campos = new ArrayList();
+
+        DefaultTableModel tb = (DefaultTableModel) tbPedidos.getModel();
+        tb.setRowCount(0);
+        for (int i = 0; i < tb.getColumnCount(); i++) {
+            campos.add(tb.getColumnName(i));
+        }
+
+        Registro reg = new Registro();
+
+        reg.setDatos(campos);
+        reg.setDatos("Pedido");
+        reg.setDatos("DesdeId='" + cmbCliente.getSelectedItem() + "'");
+
+        Object o = (Object) reg;
+
+        ArrayList<Registro> registros = pedidos.listarDatos(o);
+
+        int i = 0;
+        for (Registro r : registros) {
+            int j = 0;
+
+            tb.addRow(new Object[]{""});
+            for (Object dat : r.getDatos()) {
+                tb.setValueAt(dat, i, j);
+                j++;
+            }
+
+            i++;
+        }
+    }
+
+
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
 
         if (rbtnSi.isSelected()) {
@@ -240,9 +309,9 @@ public class frmControlPedidos extends javax.swing.JFrame {
             frmFactura ventana = null;
             try {
                 if (rbtnConsumidor.isSelected()) {
-                    ventana = new frmFactura(false, true,pedidos);
+                    ventana = new frmFactura(false, true, pedidos);
                 } else {
-                    ventana = new frmFactura(false, false,pedidos);
+                    ventana = new frmFactura(false, false, pedidos);
                 }
             } catch (Exception e) {
                 System.out.println(e);
@@ -255,7 +324,11 @@ public class frmControlPedidos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
     private void cmbClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbClienteActionPerformed
-
+        try {
+            llenarTabla();
+        } catch (Exception ex) {
+            Logger.getLogger(frmControlPedidos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_cmbClienteActionPerformed
 
     private void rbtnNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnNoActionPerformed

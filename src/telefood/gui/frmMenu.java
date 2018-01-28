@@ -135,15 +135,23 @@ public class frmMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jSalirActionPerformed
 
     private void jVentasRealizadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jVentasRealizadasActionPerformed
-        frmVentasRealizadas ventana = new frmVentasRealizadas(tablas);
-        ventana.setVisible(true);
-        dispose();
+        try {
+            frmVentasRealizadas ventana = new frmVentasRealizadas(tablas);
+            ventana.setVisible(true);
+            dispose();
+        } catch (Exception ex) {
+            Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jVentasRealizadasActionPerformed
 
     private void jPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPedidoActionPerformed
-        frmControlPedidos ventana = new frmControlPedidos(tablas);
-        ventana.setVisible(true);
-        dispose();
+        try {
+            frmControlPedidos ventana = new frmControlPedidos(tablas);
+            ventana.setVisible(true);
+            dispose();
+        } catch (Exception ex) {
+            Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jPedidoActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
