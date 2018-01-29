@@ -61,8 +61,9 @@ public class frmProductos extends javax.swing.JFrame {
         for (String campo : columnas) {
             tb.addColumn(campo);
         }
-
-        ArrayList<Registro> registros = productos.listarRegistros("Producto");
+        ArrayList<String> r = new ArrayList();
+        r.add("Producto");
+        ArrayList<Registro> registros = productos.listarRegistros((Object)r);
 
         int i = 0;
         for (Registro reg : registros) {

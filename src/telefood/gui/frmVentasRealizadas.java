@@ -35,8 +35,10 @@ public class frmVentasRealizadas extends javax.swing.JFrame {
         for (String campo : columnas) {
             tb.addColumn(campo);
         }
+        ArrayList<String>r=new ArrayList();
+        r.add("Factura");
 
-        ArrayList<Registro> registros = ventas.listarRegistros("Factura");
+        ArrayList<Registro> registros = ventas.listarRegistros((Object)r);
 
         int i = 0;
         for (Registro reg : registros) {

@@ -166,6 +166,9 @@ public class TeleFood {
         ArrayList<String> aux = new ArrayList();
         String cam = "";
         ArrayList<String> campos = (ArrayList<String>) f.getDatos().get(0);
+        
+        
+        //Array String, String, String
         int i = campos.size();
         for (String c : campos) {
             i--;
@@ -185,16 +188,19 @@ public class TeleFood {
         o = (Object) aux;
 
         ResultSet rs = tabla.consulta(o);
-        
+
         if (rs != null) {
+
             while (rs.next()) {
+
                 Registro datos = new Registro();//Creacion de un nuevo objeto Registro
                 //leer celda por celda y almacenar los datos en el objeto
                 for (String c : campos) {
                     
+                    c=c.replaceAll("DISTINCT DesdeId", "DesdeId");
                     datos.setDatos(rs.getString(c));//llena el objeto con los campos obtenidos, (Dentrode los parentesis va la columna a buscar)
                 }
-
+                
                 reg.add(datos);//Guardar el objeto obtenido en una lista
             }
         }

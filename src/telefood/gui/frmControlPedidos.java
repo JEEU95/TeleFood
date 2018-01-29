@@ -6,6 +6,8 @@
 package telefood.gui;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -47,7 +49,7 @@ public class frmControlPedidos extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        cmbCliente = new javax.swing.JComboBox<>();
+        cmbDesde = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         rbtnSi = new javax.swing.JRadioButton();
         rbtnNo = new javax.swing.JRadioButton();
@@ -62,12 +64,29 @@ public class frmControlPedidos extends javax.swing.JFrame {
 
         btnSiguiente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/siguiente.png"))); // NOI18N
         btnSiguiente.setText("Siguiente");
+        btnSiguiente.setEnabled(false);
         btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSiguienteActionPerformed(evt);
             }
         });
 
+        tbPedidos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "PedidoId", "Fecha", "Hora"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tbPedidos);
 
         jLabel3.setFont(new java.awt.Font("Script MT Bold", 0, 22)); // NOI18N
@@ -78,9 +97,9 @@ public class frmControlPedidos extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/logo 2.png"))); // NOI18N
 
-        cmbCliente.addActionListener(new java.awt.event.ActionListener() {
+        cmbDesde.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbClienteActionPerformed(evt);
+                cmbDesdeActionPerformed(evt);
             }
         });
 
@@ -150,7 +169,7 @@ public class frmControlPedidos extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
-                                .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cmbDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnActualizar))
                             .addGroup(layout.createSequentialGroup()
@@ -207,7 +226,7 @@ public class frmControlPedidos extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnActualizar, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cmbCliente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cmbDesde, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,38 +258,42 @@ public class frmControlPedidos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void llenar() throws Exception {
-        ArrayList<String> columnas = pedidos.camposTabla("Pedido");
-        ArrayList<String> campos = new ArrayList();
-        System.out.println(columnas);
+        //SELECT  From Pedido ;
+        //Array String, String, String
 
-        DefaultTableModel tb = (DefaultTableModel) tbPedidos.getModel();
-        tb.setColumnCount(0);
-        tb.setRowCount(0);
-        int nc = 0;
-        for (String campo : columnas) {
-            nc++;
-            if (nc > 2) {
-
-                tb.addColumn(campo);
-            }
+        ArrayList<String> campo = new ArrayList();
+        campo.add("DISTINCT DesdeId");
+        Registro r = new Registro();
+        r.setDatos(campo);
+        r.setDatos("Pedido");
+        ArrayList<Registro> registro = pedidos.listarDatos(r);
+        campo = new ArrayList();
+        for (Registro reg : registro) {
+            campo.add(reg.getDatos().get(0).toString());
         }
-        campos.add("DesdeId");
-
-        Registro reg = new Registro();
-
-        reg.setDatos(campos);
-        reg.setDatos("Pedido");
-
-        Object o = (Object) reg;
-
-        ArrayList<Registro> registros = pedidos.listarDatos(o);
-
-        for (Registro r : registros) {
-            for (Object dat : r.getDatos()) {
-                cmbCliente.addItem(dat.toString());
+        
+        
+        Collections.sort(campo, new Comparator<String>() {
+            public int compare(String o1, String o2) {
+                return extractInt(o1) - extractInt(o2);
             }
+
+            int extractInt(String s) {
+                String num = s.replaceAll("\\D", "");
+                // return 0 if no digits found
+                return num.isEmpty() ? 0 : Integer.parseInt(num);
+            }
+        });
+        
+        for(String c: campo){
+            cmbDesde.addItem(c);
         }
+
     }
+    
+    
+    
+    
 
     public void llenarTabla() throws Exception {
 
@@ -286,7 +309,7 @@ public class frmControlPedidos extends javax.swing.JFrame {
 
         reg.setDatos(campos);
         reg.setDatos("Pedido");
-        reg.setDatos("DesdeId='" + cmbCliente.getSelectedItem() + "'");
+        reg.setDatos("DesdeId='" + cmbDesde.getSelectedItem() + "'");
 
         Object o = (Object) reg;
 
@@ -309,11 +332,11 @@ public class frmControlPedidos extends javax.swing.JFrame {
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
         int i = (Integer) spnCuentas.getValue();
-        
+
         if (rbtnSi.isSelected()) {
             frmPedidos ventana;
             try {
-                ventana = new frmPedidos(i,pedidos);
+                ventana = new frmPedidos(i, pedidos);
                 ventana.setVisible(true);
                 dispose();
             } catch (Exception ex) {
@@ -324,9 +347,9 @@ public class frmControlPedidos extends javax.swing.JFrame {
             frmFactura ventana;
             try {
                 if (rbtnConsumidor.isSelected()) {
-                    ventana = new frmFactura(1, true, pedidos);
+                    ventana = new frmFactura(1, true, pedidos, 1);
                 } else {
-                    ventana = new frmFactura(1, false, pedidos);
+                    ventana = new frmFactura(1, false, pedidos, 1);
                 }
                 ventana.setVisible(true);
                 dispose();
@@ -334,19 +357,18 @@ public class frmControlPedidos extends javax.swing.JFrame {
                 System.out.println(e);
             }
 
-            
         }
-        
+
 
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
-    private void cmbClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbClienteActionPerformed
+    private void cmbDesdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDesdeActionPerformed
         try {
             llenarTabla();
         } catch (Exception ex) {
             Logger.getLogger(frmControlPedidos.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_cmbClienteActionPerformed
+    }//GEN-LAST:event_cmbDesdeActionPerformed
 
     private void rbtnNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnNoActionPerformed
         rbtnSi.setSelected(false);
@@ -385,7 +407,7 @@ public class frmControlPedidos extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnSiguiente;
-    private javax.swing.JComboBox<String> cmbCliente;
+    private javax.swing.JComboBox<String> cmbDesde;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

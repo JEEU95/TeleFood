@@ -36,8 +36,9 @@ public class frmPedidosProductos extends javax.swing.JFrame {
         for (String campo : columnas) {
             tb.addColumn(campo);
         }
-
-        ArrayList<Registro> registros = ped_pro.listarRegistros("Pedido");
+        ArrayList<String> r = new ArrayList();
+        r.add("Pedido");
+        ArrayList<Registro> registros = ped_pro.listarRegistros((Object)r);
 
         int i = 0;
         for (Registro reg : registros) {

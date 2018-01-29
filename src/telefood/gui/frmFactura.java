@@ -23,12 +23,14 @@ public class frmFactura extends javax.swing.JFrame {
 
     TeleFood pedidos = null;
     int div;
+    int id;
     boolean consumidor = false;
     boolean cliente = false;
 
-    public frmFactura(int div, boolean consumidor, TeleFood pedidos) throws Exception {
+    public frmFactura(int div, boolean consumidor, TeleFood pedidos, int id) throws Exception {
         this.consumidor = consumidor;
         this.div = div;
+        this.id = id;
         this.pedidos = pedidos;
         System.out.println("------------------" + div + "/" + consumidor);
         initComponents();
@@ -59,14 +61,9 @@ public class frmFactura extends javax.swing.JFrame {
     }
 
     public void llenar() throws Exception {
-        ArrayList<String> columnas = pedidos.camposTabla("Pedido_Producto");
-        System.out.println(columnas);
 
         DefaultTableModel tb = (DefaultTableModel) tbListaFactura.getModel();
 
-        for (String campo : columnas) {
-            tb.addColumn(campo);
-        }
         ArrayList<String> campos = new ArrayList();
         campos.add("count(*)");
         Registro reg = new Registro();
@@ -81,6 +78,31 @@ public class frmFactura extends javax.swing.JFrame {
                 lblNumFactura.setText(String.valueOf(cant));
             }
         }
+        campos = new ArrayList();
+        campos.add("p.Cantidad");
+        campos.add("p1.Nombre");
+        campos.add("p.PrecioEnEseMomento");
+        reg = new Registro();
+        reg.setDatos(campos);
+        reg.setDatos("Pedido_Producto p,Producto p1");
+        reg.setDatos("p.ProductoId=p1.ProductoId and p.PedidoId= 1");
+        o = (Object) reg;
+        
+        registros = pedidos.listarDatos(o);
+        
+        int i = 0;
+        for (Registro r : registros) {
+            int j = 0;
+
+            tb.addRow(new Object[]{""});
+            for (Object dat : r.getDatos()) {
+                tb.setValueAt(dat, i, j);
+                j++;
+            }
+
+            i++;
+        }
+        
 
     }
 
@@ -136,6 +158,14 @@ public class frmFactura extends javax.swing.JFrame {
 
         jLabel4.setText("Dir: Av. 24 de Mayo");
 
+        tbListaFactura.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Cantidad", "Producto", "P.U.", "Total"
+            }
+        ));
         jScrollPane1.setViewportView(tbListaFactura);
 
         btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/aceptar.png"))); // NOI18N

@@ -221,10 +221,10 @@ public class frmPedidos extends javax.swing.JFrame {
         frmFactura ventana = null;
         try {
             if (jConsumidor.isSelected()) {
-                ventana = new frmFactura(num, true,pedidos);
+                ventana = new frmFactura(num, true,pedidos,1);
               
             } else {
-                ventana = new frmFactura(num, false,pedidos);
+                ventana = new frmFactura(num, false,pedidos,1);
             }
         } catch (Exception e) {
             System.out.println(e);
