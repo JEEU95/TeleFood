@@ -58,7 +58,6 @@ public class frmControlPedidos extends javax.swing.JFrame {
         rbtnConsumidor = new javax.swing.JRadioButton();
         jLabel6 = new javax.swing.JLabel();
         spnCuentas = new javax.swing.JSpinner();
-        btnActualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -146,14 +145,6 @@ public class frmControlPedidos extends javax.swing.JFrame {
 
         spnCuentas.setModel(new javax.swing.SpinnerNumberModel(2, 2, null, 1));
 
-        btnActualizar.setBackground(new java.awt.Color(153, 255, 153));
-        btnActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/actualizar.png"))); // NOI18N
-        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActualizarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -169,8 +160,7 @@ public class frmControlPedidos extends javax.swing.JFrame {
                                 .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
                                 .addComponent(cmbDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnActualizar))
+                                .addGap(73, 73, 73))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -223,9 +213,7 @@ public class frmControlPedidos extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnActualizar, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cmbDesde, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(cmbDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -265,6 +253,7 @@ public class frmControlPedidos extends javax.swing.JFrame {
         Registro r = new Registro();
         r.setDatos(campo);
         r.setDatos("Pedido");
+        r.setDatos("Despachado=1");
         ArrayList<Registro> registro = pedidos.listarDatos(r);
         campo = new ArrayList();
         for (Registro reg : registro) {
@@ -403,12 +392,7 @@ public class frmControlPedidos extends javax.swing.JFrame {
         rbtnConsumidor.setSelected(true);
     }//GEN-LAST:event_rbtnConsumidorActionPerformed
 
-    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnActualizarActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnSiguiente;
     private javax.swing.JComboBox<String> cmbDesde;
     private javax.swing.JLabel jLabel1;

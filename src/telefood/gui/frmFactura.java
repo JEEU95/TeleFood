@@ -27,7 +27,7 @@ public class frmFactura extends javax.swing.JFrame {
     boolean consumidor = false;
     boolean cliente = false;
     double subTotal, total;
-    int iva=12;
+    int iva = 12;
 
     public frmFactura(int div, boolean consumidor, TeleFood pedidos, int id) throws Exception {
         this.consumidor = consumidor;
@@ -36,7 +36,7 @@ public class frmFactura extends javax.swing.JFrame {
         this.pedidos = pedidos;
         System.out.println("------------------" + div + "/" + consumidor);
         initComponents();
-        
+
         lblFecha.setText(fechaActual());
         if (consumidor) {
             deshabilitar();
@@ -50,20 +50,22 @@ public class frmFactura extends javax.swing.JFrame {
         DefaultTableModel tb = (DefaultTableModel) tbListaFactura.getModel();
         subTotal = 0.00;
         for (int i = 0; i < tbListaFactura.getRowCount(); i++) {
-            
+
             int c = Integer.parseInt(tb.getValueAt(i, 0).toString());
             double pu = Double.parseDouble(tb.getValueAt(i, 2).toString());
-            
-            subTotal+=c * pu;
-            tb.setValueAt(c * pu,  i,3);
-            
+
+            subTotal += c * pu;
+
+            tb.setValueAt(c * pu, i, 3);
+
         }
-        double sIva =(double)iva/100;
+        double sIva = (double) iva / 100;
         System.out.println(sIva);
-        total=subTotal+ (subTotal*sIva);
-        lblSubTotal.setText("$ "+ subTotal);
-        lblTotal.setText("$ "+ total);
-        lblIva.setText("$"+(subTotal*sIva));
+        total = subTotal + (subTotal * sIva);
+
+        lblSubTotal.setText("$ " + subTotal);
+        lblTotal.setText("$ " + total);
+        lblIva.setText("$" + (subTotal * sIva));
     }
 
     public static String fechaActual() {
@@ -79,9 +81,7 @@ public class frmFactura extends javax.swing.JFrame {
         txtNombre.setEnabled(false);
         txtTelefono.setEnabled(false);
         txtNombre.setText("Consumidor Final");
-        txtDireccion.setText("----");
-        txtTelefono.setText("----");
-        txtCedula.setText("----");
+        txtCedula.setText("-----");
     }
 
     public void llenar() throws Exception {
@@ -109,7 +109,7 @@ public class frmFactura extends javax.swing.JFrame {
         reg = new Registro();
         reg.setDatos(campos);
         reg.setDatos("Pedido_Producto p,Producto p1");
-        reg.setDatos("p.ProductoId=p1.ProductoId and p.PedidoId= 1");
+        reg.setDatos("p.ProductoId=p1.ProductoId and p.PedidoId=" + id);
         o = (Object) reg;
 
         registros = pedidos.listarDatos(o);
@@ -261,7 +261,7 @@ public class frmFactura extends javax.swing.JFrame {
             }
         });
 
-        btnBuscar.setBackground(new java.awt.Color(204, 255, 255));
+        btnBuscar.setBackground(new java.awt.Color(204, 102, 0));
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/lupa.png"))); // NOI18N
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -271,9 +271,9 @@ public class frmFactura extends javax.swing.JFrame {
 
         txtIva.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtIva.setText("12");
-        txtIva.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtIvaKeyPressed(evt);
+        txtIva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIvaActionPerformed(evt);
             }
         });
 
@@ -337,12 +337,12 @@ public class frmFactura extends javax.swing.JFrame {
                                 .addComponent(btnAtras)
                                 .addGap(26, 26, 26)
                                 .addComponent(btnAceptar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 178, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel13)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel14)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(txtIva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel16)
@@ -418,7 +418,7 @@ public class frmFactura extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblIva)
-                            .addComponent(txtIva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtIva)
                             .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(3, 3, 3)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -437,16 +437,86 @@ public class frmFactura extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    public void insertarCliente() {
+        Registro registro;
+        if (!cliente && !txtCedula.equals("-----")) {
+            try {
+                registro = new Registro();
+                registro.setDatos("'" + txtCedula.getText() + "'");
+                registro.setDatos(txtNombre.getText());
+                if (txtDireccion.getText().equals("")) {
+                    registro.setDatos(null);
+                } else {
+                    registro.setDatos(txtDireccion.getText());
+
+                }
+                System.out.println(registro.getDatos());
+                pedidos.insertarDatos("Cliente", registro);
+                if (!txtTelefono.getText().equals("")) {
+
+                    String telefono[] = txtTelefono.getText().split(",");
+                    for (String tlf : telefono) {
+                        registro = new Registro();
+                        registro.setDatos("'" + txtCedula.getText() + "'");
+                        registro.setDatos(tlf);
+
+                        System.out.println(registro.getDatos());
+                        pedidos.insertarDatos("Telefono", registro);
+                    }
+
+                }
+
+            } catch (Exception ex) {
+                Logger.getLogger(frmFactura.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    }
+
+    public void insertarFactura() {
+        try {
+            Registro registro = new Registro();
+            registro.setDatos("DEFAULT");
+            registro.setDatos("'" + txtCedula.getText() + "'");
+            registro.setDatos(id);
+            
+            String aux = String.format("%.2f", total).replaceAll(",", ".");
+            double aux2 = Double.parseDouble(aux);
+
+            registro.setDatos(aux2);
+            registro.setDatos(iva);
+            System.out.println(registro.getDatos());
+            pedidos.insertarDatos("Factura", registro);
+
+            ArrayList<String> camposEditar = new ArrayList();
+            ArrayList<String> camposClave = new ArrayList();
+
+            camposClave.add("PedidoId=" + id);
+            camposEditar.add("Despachado=2");
+
+            pedidos.editarDatos("Pedido", camposClave, camposEditar);
+        } catch (Exception ex) {
+            Logger.getLogger(frmFactura.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         div--;
 
         System.out.println("*************" + div);
         if (div == 0) {
-            frmMenu ventana = new frmMenu(pedidos);
-            ventana.setVisible(true);
+            try {
+                insertarCliente();
+                insertarFactura();
+                frmMenu ventana = new frmMenu(pedidos);
+                ventana.setVisible(true);
+            } catch (Exception ex) {
+                Logger.getLogger(frmFactura.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         } else {
             try {
+
                 frmPedidos ventana = new frmPedidos(div, pedidos, id);
                 ventana.setVisible(true);
             } catch (Exception ex) {
@@ -503,8 +573,8 @@ public class frmFactura extends javax.swing.JFrame {
                 reg = pedidos.listarRegistros((Object) param);
                 Registro r = reg.get(0);
 
-                txtNombre.setText(r.getDatos().get(1) + " " + r.getDatos().get(2));
-                txtDireccion.setText((String) r.getDatos().get(3));
+                txtNombre.setText(r.getDatos().get(1).toString());
+                txtDireccion.setText((String) r.getDatos().get(2));
                 cliente = true;
 
             } catch (Exception e) {
@@ -538,12 +608,12 @@ public class frmFactura extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void txtIvaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIvaKeyPressed
-        iva=Integer.parseInt(txtIva.getText());
-        total=subTotal*(1+iva/100);
-        lblTotal.setText("$ "+ total);
-        lblIva.setText("$"+subTotal*(iva/100));
-    }//GEN-LAST:event_txtIvaKeyPressed
+    private void txtIvaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIvaActionPerformed
+        iva = Integer.parseInt(txtIva.getText());
+        total = subTotal * (1 + iva / 100);
+        lblTotal.setText("$ " + total);
+        lblIva.setText("$" + subTotal * (iva / 100));
+    }//GEN-LAST:event_txtIvaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

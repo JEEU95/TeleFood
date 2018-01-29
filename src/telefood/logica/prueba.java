@@ -16,7 +16,13 @@ import java.util.Comparator;
 public class prueba {
 
     public static void main(String[] args) throws Exception {
-        double n= (double)12/100;
-        System.out.println(n);
+        double a=5.4353;
+        String b = String.format("%.2f", a).replaceAll(",", ".");
+        double c = Double.parseDouble(b);
+        System.out.println(a);
+        System.out.println(b);
+        System.out.println(c);
+        
+        
     }
 }

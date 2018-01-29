@@ -269,7 +269,7 @@ public class frmHacerPedido extends javax.swing.JFrame {
         reg.setDatos("T"+numeroTarjeta);
         reg.setDatos("curdate()");
         reg.setDatos("curtime()");
-        reg.setDatos(0);
+        reg.setDatos(1);
         
         try {
             pedidos.insertarDatos("Pedido", reg);

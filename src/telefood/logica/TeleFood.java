@@ -66,7 +66,7 @@ public class TeleFood {
                 if (isNumero){
                     val += r;
                 } else {
-                    if (r.toString().contains("(")){
+                    if (r.toString().contains("(") || r.toString().contains("'")){
                         val += r;
                     } else {
                         val += "'" + r + "'";
