@@ -1,9 +1,13 @@
 package telefood.gui;
 
+import com.bulenkov.darcula.DarculaLaf;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.basic.BasicLookAndFeel;
 import telefood.datos.Conexion_DB;
 import telefood.logica.TeleFood;
 
@@ -60,19 +64,27 @@ public class frmLogin extends javax.swing.JFrame {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/WhatsApp Image 2018-01-13 at 00.27.08.jpeg"))); // NOI18N
 
-        txtUser.setForeground(new java.awt.Color(102, 102, 102));
+        txtUser.setBackground(new java.awt.Color(0, 0, 0));
+        txtUser.setForeground(new java.awt.Color(255, 255, 255));
         txtUser.setText("Usuario ");
         txtUser.setBorder(null);
+        txtUser.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtUser.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtUserFocusGained(evt);
+            }
+        });
+        txtUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUserActionPerformed(evt);
             }
         });
 
         jSeparator1.setBackground(new java.awt.Color(41, 168, 73));
         jSeparator1.setForeground(new java.awt.Color(41, 168, 73));
 
-        txtPass.setForeground(new java.awt.Color(102, 102, 102));
+        txtPass.setBackground(new java.awt.Color(0, 0, 0));
+        txtPass.setForeground(new java.awt.Color(255, 255, 255));
         txtPass.setText("jPasswordField1");
         txtPass.setBorder(null);
         txtPass.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -97,7 +109,7 @@ public class frmLogin extends javax.swing.JFrame {
             }
         });
 
-        lbl_close.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
+        lbl_close.setFont(new java.awt.Font("Segoe UI Semilight", 0, 10)); // NOI18N
         lbl_close.setForeground(new java.awt.Color(51, 51, 51));
         lbl_close.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/eliminar.png"))); // NOI18N
@@ -147,7 +159,7 @@ public class frmLogin extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addComponent(lbl_close)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,7 +183,7 @@ public class frmLogin extends javax.swing.JFrame {
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -240,6 +252,10 @@ public class frmLogin extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_lbl_closeMousePressed
 
+    private void txtUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUserActionPerformed
+
     @Override
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().
@@ -276,7 +292,16 @@ public class frmLogin extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-
+        try {
+            BasicLookAndFeel darcula = new DarculaLaf();
+            UIManager.setLookAndFeel(darcula);
+        } catch (UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(frmLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        
+        
+        //</editor-fold>
+        //</editor-fold>
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
