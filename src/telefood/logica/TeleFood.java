@@ -143,7 +143,7 @@ public class TeleFood {
         f = new ArrayList();
         f.add("*");
         f.add(nom);
-        System.out.println("Registro de:"+f);
+        
         try{
             String con = parametros.get(1);
             f.add(con);
@@ -153,14 +153,11 @@ public class TeleFood {
         ArrayList<Registro> reg = new ArrayList();
         
 
-        for (String c:campos) {
-            System.out.println(c);
-        }
-        System.out.println(f);
+        
         Object obj = f;
 
         ResultSet rs = tabla.consulta(obj);
-        System.out.println("-------------------");
+        
         while (rs.next()) {
             Registro datos = new Registro();//Creacion de un nuevo objeto Registro
             //leer celda por celda y almacenar los datos en el objeto

@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import telefood.logica.Registro;
 import telefood.logica.TeleFood;
@@ -28,7 +29,10 @@ public class frmControlPedidos extends javax.swing.JFrame {
     public frmControlPedidos(TeleFood pedidos) throws Exception {
         initComponents();
         this.pedidos = pedidos;
-        lblDividir.setVisible(false);
+        rbtnSi.setVisible(false);
+        rbtnNo.setVisible(false);
+        lblDividir1.setVisible(false);
+        lblDividir2.setVisible(false);
         spnCuentas.setVisible(false);
         llenar();
         llenarTabla();
@@ -53,10 +57,10 @@ public class frmControlPedidos extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         rbtnSi = new javax.swing.JRadioButton();
         rbtnNo = new javax.swing.JRadioButton();
-        lblDividir = new javax.swing.JLabel();
+        lblDividir2 = new javax.swing.JLabel();
         rbtnFactura = new javax.swing.JRadioButton();
         rbtnConsumidor = new javax.swing.JRadioButton();
-        jLabel6 = new javax.swing.JLabel();
+        lblDividir1 = new javax.swing.JLabel();
         spnCuentas = new javax.swing.JSpinner();
         btnCancelar = new javax.swing.JButton();
 
@@ -121,8 +125,8 @@ public class frmControlPedidos extends javax.swing.JFrame {
             }
         });
 
-        lblDividir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblDividir.setText("Cantidad de cuentas a dividir:");
+        lblDividir2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblDividir2.setText("Cantidad de cuentas a dividir:");
 
         rbtnFactura.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         rbtnFactura.setText("Factura");
@@ -141,8 +145,8 @@ public class frmControlPedidos extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel6.setText("¿Desea dividir la cuenta?");
+        lblDividir1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblDividir1.setText("¿Desea dividir la cuenta?");
 
         spnCuentas.setModel(new javax.swing.SpinnerNumberModel(2, 2, null, 1));
 
@@ -185,7 +189,7 @@ public class frmControlPedidos extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel6)
+                            .addComponent(lblDividir1)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(rbtnSi)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -193,7 +197,7 @@ public class frmControlPedidos extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(lblDividir))
+                                .addComponent(lblDividir2))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(63, 63, 63)
                                 .addComponent(spnCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -243,8 +247,8 @@ public class frmControlPedidos extends javax.swing.JFrame {
                                 .addComponent(rbtnConsumidor))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel6)
-                                    .addComponent(lblDividir))
+                                    .addComponent(lblDividir1)
+                                    .addComponent(lblDividir2))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(rbtnSi)
@@ -272,8 +276,7 @@ public class frmControlPedidos extends javax.swing.JFrame {
         for (Registro reg : registro) {
             campo.add(reg.getDatos().get(0).toString());
         }
-        
-        
+
         Collections.sort(campo, new Comparator<String>() {
             public int compare(String o1, String o2) {
                 return extractInt(o1) - extractInt(o2);
@@ -285,16 +288,12 @@ public class frmControlPedidos extends javax.swing.JFrame {
                 return num.isEmpty() ? 0 : Integer.parseInt(num);
             }
         });
-        
-        for(String c: campo){
+
+        for (String c : campo) {
             cmbDesde.addItem(c);
         }
 
     }
-    
-    
-    
-    
 
     public void llenarTabla() throws Exception {
 
@@ -333,36 +332,36 @@ public class frmControlPedidos extends javax.swing.JFrame {
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
         int i = (Integer) spnCuentas.getValue();
-        int id=Integer.parseInt(tbPedidos.getValueAt(0, 0).toString());
-        System.out.println("id:"+id);
-        if (rbtnSi.isSelected()) {
-            frmPedidos ventana;
-            try {
-                ventana = new frmPedidos(i, pedidos,id);
-                ventana.setVisible(true);
-                dispose();
-            } catch (Exception ex) {
-                Logger.getLogger(frmControlPedidos.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            int id = Integer.parseInt(tbPedidos.getValueAt(0, 0).toString());
 
-        } else {
-            frmFactura ventana;
-            try {
-                if (rbtnConsumidor.isSelected()) {
-                    ventana = new frmFactura(1, true, pedidos, id);
-                } else {
-                    ventana = new frmFactura(1, false, pedidos, id);
+            if (rbtnSi.isSelected()) {
+                frmPedidos ventana;
+                try {
+                    ventana = new frmPedidos(i, pedidos, id);
+                    ventana.setVisible(true);
+                    dispose();
+                } catch (Exception ex) {
+                    Logger.getLogger(frmControlPedidos.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                ventana.setVisible(true);
-                dispose();
-            } catch (Exception e) {
-                System.out.println(e);
+
+            } else {
+                frmFactura ventana;
+                try {
+                    if (rbtnConsumidor.isSelected()) {
+                        ventana = new frmFactura(1, true, pedidos, id);
+                    } else {
+                        ventana = new frmFactura(1, false, pedidos, id);
+                    }
+                    ventana.setVisible(true);
+                    dispose();
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "No hubo como generar la factura pedida");
         }
-        
-        
-        
-        
 
 
     }//GEN-LAST:event_btnSiguienteActionPerformed
@@ -378,7 +377,7 @@ public class frmControlPedidos extends javax.swing.JFrame {
     private void rbtnNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnNoActionPerformed
         rbtnSi.setSelected(false);
         rbtnNo.setSelected(true);
-        lblDividir.setVisible(false);
+        lblDividir2.setVisible(false);
         spnCuentas.setVisible(false);
         rbtnConsumidor.setVisible(true);
         rbtnFactura.setVisible(true);
@@ -387,7 +386,7 @@ public class frmControlPedidos extends javax.swing.JFrame {
     private void rbtnSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnSiActionPerformed
         rbtnNo.setSelected(false);
         rbtnSi.setSelected(true);
-        lblDividir.setVisible(true);
+        lblDividir2.setVisible(true);
         spnCuentas.setVisible(true);
         rbtnConsumidor.setVisible(false);
         rbtnFactura.setVisible(false);
@@ -419,9 +418,9 @@ public class frmControlPedidos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblDividir;
+    private javax.swing.JLabel lblDividir1;
+    private javax.swing.JLabel lblDividir2;
     private javax.swing.JRadioButton rbtnConsumidor;
     private javax.swing.JRadioButton rbtnFactura;
     private javax.swing.JRadioButton rbtnNo;

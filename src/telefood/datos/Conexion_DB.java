@@ -28,19 +28,7 @@ public class Conexion_DB {
             return conn;
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
             System.out.println("Error al conectar DB");
-        }/*
-        try {
-            Parametros_DB pc=new Parametros_DB();
-          
-            String BD = pc.URL;
-            System.out.println(BD);
-            //Establece la conexion con (BD, "HR", "1234");
-            Connection cnx = DriverManager.getConnection(BD,user, pass);
-            System.out.println("**********************");
-            return cnx;
-        } catch (SQLException ex) {
-            System.out.println("Error al conectar con la BD");
-        }*/
+        }
         return null;
     }
 

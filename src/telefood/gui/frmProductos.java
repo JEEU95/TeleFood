@@ -52,15 +52,9 @@ public class frmProductos extends javax.swing.JFrame {
     }
 
     public void llenar() throws Exception {
-        ArrayList<String> columnas = productos.camposTabla("Producto");
-        System.out.println(columnas);
-
+            
         DefaultTableModel tb = (DefaultTableModel) tbListaProductos.getModel();
-        tb.setColumnCount(0);
         tb.setRowCount(0);
-        for (String campo : columnas) {
-            tb.addColumn(campo);
-        }
         ArrayList<String> r = new ArrayList();
         r.add("Producto");
         ArrayList<Registro> registros = productos.listarRegistros((Object)r);
@@ -77,8 +71,7 @@ public class frmProductos extends javax.swing.JFrame {
             
             i++;
         }
-        labelCargando.setVisible(false);
-        labelImageCargando.setVisible(false);
+
         revalidate();
         repaint();
     }
@@ -107,10 +100,6 @@ public class frmProductos extends javax.swing.JFrame {
         };
         btnAceptar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
-        labelCargando = new javax.swing.JLabel();
-        URL url = getClass().getResource("/telefood/gui/img/loading_circle.gif");
-        ImageIcon imageIcon = new ImageIcon(url);
-        labelImageCargando = new javax.swing.JLabel(imageIcon);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -140,6 +129,14 @@ public class frmProductos extends javax.swing.JFrame {
             }
         });
 
+        tbListaProductos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ProductoId", "Imagen", "Nombre", "Precio", "EstaEnOferta", "Tipo"
+            }
+        ));
         tbListaProductos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tbListaProductos.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tbListaProductos);
@@ -161,11 +158,6 @@ public class frmProductos extends javax.swing.JFrame {
             }
         });
 
-        labelCargando.setText("Cargando...");
-        labelCargando.setOpaque(true);
-
-        labelImageCargando.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/loading_circle.gif"))); // NOI18N
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -174,11 +166,7 @@ public class frmProductos extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(265, 265, 265)
-                        .addComponent(btnAceptar)
-                        .addGap(70, 70, 70)
-                        .addComponent(labelCargando)
-                        .addGap(18, 18, 18)
-                        .addComponent(labelImageCargando))
+                        .addComponent(btnAceptar))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel1)
@@ -186,19 +174,18 @@ public class frmProductos extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnAgregar)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnEditar)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnEliminar))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnAgregar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnEditar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnEliminar))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -221,11 +208,7 @@ public class frmProductos extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(labelImageCargando, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnAceptar)
-                        .addComponent(labelCargando)))
+                .addComponent(btnAceptar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -241,8 +224,6 @@ public class frmProductos extends javax.swing.JFrame {
         {
             @Override
             public void windowClosed(WindowEvent e) {
-                labelCargando.setVisible(true);
-                labelImageCargando.setVisible(true);
                     //To change body of generated methods, choose Tools | Templates.
                     java.awt.EventQueue.invokeLater(() -> {
                         try {
@@ -263,7 +244,7 @@ public class frmProductos extends javax.swing.JFrame {
         ArrayList<String> camposClave = new ArrayList();
         int i = tbListaProductos.getSelectedRow();
         Registro reg = new Registro();
-        System.out.println("Posicion Eliminar:" + i);
+        
         try {
             for (int j = 0; j < tb.getColumnCount(); j++) {
                 if (tb.getColumnName(j).contains("Id")) {
@@ -297,8 +278,6 @@ public class frmProductos extends javax.swing.JFrame {
         {
             @Override
             public void windowClosed(WindowEvent e) {
-                labelCargando.setVisible(true);
-                labelImageCargando.setVisible(true);
                     //To change body of generated methods, choose Tools | Templates.
                     java.awt.EventQueue.invokeLater(() -> {
                         try {
@@ -324,8 +303,6 @@ public class frmProductos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel labelCargando;
-    private javax.swing.JLabel labelImageCargando;
     private javax.swing.JTable tbListaProductos;
     // End of variables declaration//GEN-END:variables
 }
