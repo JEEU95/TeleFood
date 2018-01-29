@@ -5,7 +5,11 @@
  */
 package telefood.gui;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import telefood.logica.Registro;
 import telefood.logica.TeleFood;
@@ -14,6 +18,7 @@ public class frmVentasRealizadas extends javax.swing.JFrame {
 
     TeleFood ventas=null;
     private DefaultTableModel tabla;
+    private int operacion = 1;
 
     /**
      * Creates new form frmVentasRealizadas
@@ -21,7 +26,7 @@ public class frmVentasRealizadas extends javax.swing.JFrame {
     public frmVentasRealizadas(TeleFood ventas) throws Exception {
         initComponents();
         this.ventas=ventas;
-        llenar();
+        //llenar();
     }
     
     
@@ -72,8 +77,11 @@ public class frmVentasRealizadas extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbListaVentas = new javax.swing.JTable();
         btnAceptar = new javax.swing.JButton();
-        jComboBoxFecha = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        jRadioButton3 = new javax.swing.JRadioButton();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -93,33 +101,62 @@ public class frmVentasRealizadas extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tbListaVentas);
 
         btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/aceptar.png"))); // NOI18N
-        btnAceptar.setText("Aceptar");
+        btnAceptar.setText("Consultar");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAceptarActionPerformed(evt);
             }
         });
 
-        jComboBoxFecha.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "dd/mm/yy", " " }));
-        jComboBoxFecha.addActionListener(new java.awt.event.ActionListener() {
+        jRadioButton1.setSelected(true);
+        jRadioButton1.setText("Lo más vendido.");
+        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxFechaActionPerformed(evt);
+                jRadioButton1ActionPerformed(evt);
             }
         });
 
-        jLabel4.setText("Filtrar por fecha:");
+        jRadioButton2.setText("Lo vendido durante el día.");
+        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton2ActionPerformed(evt);
+            }
+        });
+
+        jRadioButton3.setText("Consultar por día");
+        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton3ActionPerformed(evt);
+            }
+        });
+
+        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
+        jFormattedTextField1.setEnabled(false);
+
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/cancelar.png"))); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(229, 229, 229)
-                .addComponent(btnAceptar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jRadioButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jRadioButton2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jRadioButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jFormattedTextField1))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -131,13 +168,14 @@ public class frmVentasRealizadas extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(64, 64, 64)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(jComboBoxFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCancelar)
+                .addGap(18, 18, 18)
+                .addComponent(btnAceptar)
+                .addGap(137, 137, 137))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,15 +187,19 @@ public class frmVentasRealizadas extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3))
                     .addComponent(jLabel1))
-                .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBoxFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton1)
+                    .addComponent(jRadioButton2)
+                    .addComponent(jRadioButton3)
+                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(3, 3, 3)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnAceptar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAceptar)
+                    .addComponent(btnCancelar))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
@@ -165,9 +207,125 @@ public class frmVentasRealizadas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        
+        Date fecha = new Date();
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("YYYY-MM-dd");
+        String fechaActual = formatoFecha.format(fecha);
+        System.out.println();
+        
+        Registro reg = new Registro();
+        ArrayList<String> vectorString = new ArrayList<>();
+        ArrayList<Registro> arrayRegistros = new ArrayList<>();
+        
+        String tabla = "";
+        String condiciones = "";
+        
+        switch(operacion){
+            case 1:
+                vectorString.add("P.ProductoId");
+                tabla = "(SELECT ProductoId, COUNT(ProductoId) NUMERO FROM "
+                        + "Pedido_Producto GROUP BY ProductoId) P";
+                condiciones = "P.NUMERO = (SELECT MAX(C.NUMERO) FROM (SELECT "
+                        + "ProductoId, COUNT(ProductoId) NUMERO FROM Pedido_"
+                        + "Producto GROUP BY ProductoId) C)";
+                reg.setDatos(vectorString);
+                reg.setDatos(tabla);
+                reg.setDatos(condiciones);
+                try {
+                    arrayRegistros = ventas.listarDatos(reg);
+                    
+                    if (!arrayRegistros.isEmpty()){
+                        String numero = arrayRegistros.get(0).getDatos().get(0).toString();
+                        System.out.println(numero);
+                        reg = new Registro();
+                        vectorString = new ArrayList<>();
+                        vectorString.add("Nombre");
+                        reg.setDatos(vectorString);
+                        reg.setDatos("Producto");
+                        reg.setDatos("ProductoId=" + numero);
+                        arrayRegistros = ventas.listarDatos(reg);
+                    }
+                } catch (Exception ex) {
+                    System.err.println("Error: " + ex.getMessage());
+                }
+                
+                break;
+            case 2:
+                vectorString.add("pe.PedidoId");
+                vectorString.add("prod.Nombre");
+                vectorString.add("pp.Cantidad");
+                vectorString.add("pp.PrecioEnEseMomento");
+                tabla = "Pedido pe, Producto prod, Pedido_Producto pp";
+                condiciones = "pe.PedidoId=pp.PedidoId AND pp.ProductoId=prod.ProductoId AND pe.Fecha='"+ fechaActual +"' ORDER BY pe.PedidoId";
+                reg.setDatos(vectorString);
+                reg.setDatos(tabla);
+                reg.setDatos(condiciones);
+                try {
+                    arrayRegistros = ventas.listarDatos(reg);
+                } catch (Exception ex) {
+                    System.err.println("Error: " + ex.getMessage());
+                }
+                break;
+            default:
+                String txtFecha = jFormattedTextField1.getText();
+                vectorString.add("Pedido");
+                vectorString.add("Fecha='"+txtFecha+"'");
+                try {
+                     arrayRegistros = ventas.listarRegistros(vectorString);
+                } catch (Exception ex) {
+                    System.err.println("Error: " + ex.getMessage());
+                }
+        }
+        
+
+        DefaultTableModel tm = (DefaultTableModel) tbListaVentas.getModel();
+        tm.setColumnCount(0);
+        tm.setRowCount(0);
+        
+        switch(operacion){
+            case 1:
+                Object[] vector = new Object[1];
+                vector[0] = "Nombre del Producto Más Vendido";
+                tm.setColumnIdentifiers(vector);
+                break;
+            case 2:
+                Object[] vector2 = new Object[4];
+                vector2[0] = "ID del Pedido";
+                vector2[1] = "Nombre del Producto";
+                vector2[2] = "Cantidad";
+                vector2[3] = "Precio de Venta";
+                tm.setColumnIdentifiers(vector2);
+                break;
+            default:
+                Object[] vector3 = new Object[5];
+                vector3[0] = "ID del Pedido";
+                vector3[1] = "Pedido desde";
+                vector3[2] = "Fecha";
+                vector3[3] = "Hora";
+                vector3[4] = "Despachado";
+                tm.setColumnIdentifiers(vector3);
+        }
+        
+        if (!arrayRegistros.isEmpty()) {
+            tm.setColumnCount(arrayRegistros.get(0).getDatos().size());
+            int i = 0;
+            for (Registro r : arrayRegistros) {
+                int j = 0;
+                tm.addRow(new Object[]{""});
+                for (Object dat : r.getDatos()) {
+                    tm.setValueAt(dat, i, j);
+                    j++;
+                }
+                i++;
+            }
+        }
+        
+        
+        /*
         frmMenu ventana = new frmMenu(ventas);
         ventana.setVisible(true);
         dispose();
+        */
     }//GEN-LAST:event_btnAceptarActionPerformed
 
 
@@ -175,17 +333,54 @@ public class frmVentasRealizadas extends javax.swing.JFrame {
 
     }//GEN-LAST:event_formWindowOpened
 
-    private void jComboBoxFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFechaActionPerformed
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+        // TODO add your handling code here:
+        jRadioButton3.setSelected(false);
+        jFormattedTextField1.setText("");
+        jFormattedTextField1.setEnabled(false);
+        jRadioButton2.setSelected(true);
+        jRadioButton1.setSelected(false);
+        operacion=2;
+    }//GEN-LAST:event_jRadioButton2ActionPerformed
 
-    }//GEN-LAST:event_jComboBoxFechaActionPerformed
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+        // TODO add your handling code here:
+        jRadioButton3.setSelected(false);
+        jFormattedTextField1.setText("");
+        jFormattedTextField1.setEnabled(false);
+        jRadioButton2.setSelected(false);
+        jRadioButton1.setSelected(true);
+        operacion=1;
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
+
+    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
+        // TODO add your handling code here:
+        jRadioButton3.setSelected(true);
+        jFormattedTextField1.setText("");
+        jFormattedTextField1.setEnabled(true);
+        jRadioButton2.setSelected(false);
+        jRadioButton1.setSelected(false);
+        operacion = 3;
+    }//GEN-LAST:event_jRadioButton3ActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        try {
+            dispose();
+        } catch (Exception ex) {
+            Logger.getLogger(frmNuevoProducto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
-    private javax.swing.JComboBox<String> jComboBoxFecha;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbListaVentas;
     // End of variables declaration//GEN-END:variables
