@@ -6,14 +6,16 @@
 package telefood.gui;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import telefood.logica.Registro;
 import telefood.logica.TeleFood;
 
 public class frmListaFacturas extends javax.swing.JFrame {
-
+    
     TeleFood ventas=null;
-    private DefaultTableModel tabla;
+    String Fecha=null;
 
     /**
      * Creates new form frmVentasRealizadas
@@ -26,19 +28,39 @@ public class frmListaFacturas extends javax.swing.JFrame {
     
     
     public void llenar() throws Exception {
-        ArrayList<String> columnas = ventas.camposTabla("Factura");
+  /*      ArrayList<String> columnas = ventas.camposTabla("Factura");
         System.out.println(columnas);
-
+*/      Fecha=txtFecha.getText();
         DefaultTableModel tb = (DefaultTableModel) tbListaVentas.getModel();
-        tb.setColumnCount(0);
+        //tb.setColumnCount(0);
         tb.setRowCount(0);
-        for (String campo : columnas) {
+        /*for (String campo : columnas) {
             tb.addColumn(campo);
+        }*/
+        //SELECT f.FacturaId, f.ClienteId, f.PedidoId, f.Total, f.IVA, p.Fecha, p.hora FROM Factura f, Pedido p WHERE p.PedidoId= f.PedidoId
+        ArrayList<String>campos=new ArrayList();
+        campos.add("f.FacturaId");
+        campos.add("f.ClienteId");
+        campos.add("f.PedidoId");
+        campos.add("f.Total");
+        campos.add("f.IVA");
+        campos.add("p.Fecha");
+        campos.add("p.hora");
+
+        Registro re = new Registro();
+        re.setDatos(campos);
+        re.setDatos("Factura f, Pedido p");
+        if(Fecha.equals("") || Fecha ==null){
+            re.setDatos("p.PedidoId= f.PedidoId");
+        }else{
+            re.setDatos("p.PedidoId= f.PedidoId AND p.Fecha='"+Fecha+"'");
         }
+        
         ArrayList<String>r=new ArrayList();
         r.add("Factura");
-
-        ArrayList<Registro> registros = ventas.listarRegistros((Object)r);
+        
+        //ArrayList<Registro> registros = ventas.listarRegistros((Object)r);
+        ArrayList<Registro> registros = ventas.listarDatos((Object)re);
 
         int i = 0;
         for (Registro reg : registros) {
@@ -91,6 +113,14 @@ public class frmListaFacturas extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/logo 2.png"))); // NOI18N
 
+        tbListaVentas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "FacturaId", "ClienteId", "PedidoId", "Total", "IVA", "Fecha", "hora"
+            }
+        ));
         jScrollPane1.setViewportView(tbListaVentas);
 
         btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/aceptar.png"))); // NOI18N
@@ -119,6 +149,11 @@ public class frmListaFacturas extends javax.swing.JFrame {
         btnFiltrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/filtro.png"))); // NOI18N
         btnFiltrar.setText("Filtrar");
         btnFiltrar.setEnabled(false);
+        btnFiltrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFiltrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -197,10 +232,25 @@ public class frmListaFacturas extends javax.swing.JFrame {
             txtFecha.setEnabled(true);
             btnFiltrar.setEnabled(true);
         }else{
-            btnFiltrar.setEnabled(false);
-            txtFecha.setEnabled(false);
+            try {
+                btnFiltrar.setEnabled(false);
+                txtFecha.setEnabled(false);
+                txtFecha.setText("");
+                Fecha=txtFecha.getText();
+                
+            } catch (Exception ex) {
+                Logger.getLogger(frmListaFacturas.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_chbFechaStateChanged
+
+    private void btnFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarActionPerformed
+        try {
+            llenar();
+        } catch (Exception ex) {
+            Logger.getLogger(frmListaFacturas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnFiltrarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;

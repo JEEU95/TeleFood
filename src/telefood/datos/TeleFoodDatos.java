@@ -84,7 +84,7 @@ public class TeleFoodDatos extends Conexion_DB {
             cnx = conectar(user, pass);
 
             Statement st = cnx.createStatement();
-            //System.out.println("SELECT " + com.get(0) + " FROM " + com.get(1) + condicion);
+            System.out.println("SELECT " + com.get(0) + " FROM " + com.get(1) + condicion);
             ResultSet rs = st.executeQuery("SELECT " + com.get(0) + " FROM " + com.get(1) + condicion); //Realizar consulta
             return rs;
         } catch (SQLException ex) {
