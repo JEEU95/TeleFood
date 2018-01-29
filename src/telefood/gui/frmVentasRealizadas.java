@@ -365,6 +365,8 @@ public class frmVentasRealizadas extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         try {
+           // frmMenu ventana = new frmMenu(ventas);
+            //ventana.setVisible(true);
             dispose();
         } catch (Exception ex) {
             Logger.getLogger(frmNuevoProducto.class.getName()).log(Level.SEVERE, null, ex);

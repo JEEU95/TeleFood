@@ -58,6 +58,7 @@ public class frmControlPedidos extends javax.swing.JFrame {
         rbtnConsumidor = new javax.swing.JRadioButton();
         jLabel6 = new javax.swing.JLabel();
         spnCuentas = new javax.swing.JSpinner();
+        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -145,6 +146,14 @@ public class frmControlPedidos extends javax.swing.JFrame {
 
         spnCuentas.setModel(new javax.swing.SpinnerNumberModel(2, 2, null, 1));
 
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/cancelar.png"))); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -192,7 +201,9 @@ public class frmControlPedidos extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(rbtnFactura)
                             .addComponent(rbtnConsumidor))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                        .addComponent(btnCancelar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSiguiente)))
                 .addGap(61, 61, 61))
         );
@@ -219,7 +230,9 @@ public class frmControlPedidos extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                        .addComponent(btnSiguiente)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnSiguiente)
+                            .addComponent(btnCancelar))
                         .addGap(49, 49, 49))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -392,7 +405,14 @@ public class frmControlPedidos extends javax.swing.JFrame {
         rbtnConsumidor.setSelected(true);
     }//GEN-LAST:event_rbtnConsumidorActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        frmMenu ventana = new frmMenu(pedidos);
+        ventana.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnSiguiente;
     private javax.swing.JComboBox<String> cmbDesde;
     private javax.swing.JLabel jLabel1;

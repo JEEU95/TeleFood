@@ -30,9 +30,10 @@ public class frmMenu extends javax.swing.JFrame {
         jMenuBar = new javax.swing.JMenuBar();
         jMenu = new javax.swing.JMenu();
         jProductos = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jVentasRealizadas = new javax.swing.JMenuItem();
         jPedido = new javax.swing.JMenuItem();
+        jListarFacturas = new javax.swing.JMenuItem();
+        jConsultaVentas = new javax.swing.JMenuItem();
+        jHacerFactura = new javax.swing.JMenuItem();
         jSalir = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -59,32 +60,41 @@ public class frmMenu extends javax.swing.JFrame {
         });
         jMenu.add(jProductos);
 
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/barra.png"))); // NOI18N
-        jMenuItem1.setText("Hacer Pedido");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu.add(jMenuItem1);
-
-        jVentasRealizadas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/listado.png"))); // NOI18N
-        jVentasRealizadas.setText("Facturas");
-        jVentasRealizadas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jVentasRealizadasActionPerformed(evt);
-            }
-        });
-        jMenu.add(jVentasRealizadas);
-
-        jPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/pedido.png"))); // NOI18N
-        jPedido.setText("Realizar Factura");
+        jPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/barra.png"))); // NOI18N
+        jPedido.setText("Hacer Pedido");
         jPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jPedidoActionPerformed(evt);
             }
         });
         jMenu.add(jPedido);
+
+        jListarFacturas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/listado.png"))); // NOI18N
+        jListarFacturas.setText("Registro de Facturas");
+        jListarFacturas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jListarFacturasActionPerformed(evt);
+            }
+        });
+        jMenu.add(jListarFacturas);
+
+        jConsultaVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/consulta.png"))); // NOI18N
+        jConsultaVentas.setText("Consultas");
+        jConsultaVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jConsultaVentasActionPerformed(evt);
+            }
+        });
+        jMenu.add(jConsultaVentas);
+
+        jHacerFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/pedido.png"))); // NOI18N
+        jHacerFactura.setText("Realizar Factura");
+        jHacerFactura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jHacerFacturaActionPerformed(evt);
+            }
+        });
+        jMenu.add(jHacerFactura);
 
         jSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/salir.png"))); // NOI18N
         jSalir.setText("Salir");
@@ -136,17 +146,17 @@ public class frmMenu extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jSalirActionPerformed
 
-    private void jVentasRealizadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jVentasRealizadasActionPerformed
+    private void jConsultaVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jConsultaVentasActionPerformed
         try {
             frmVentasRealizadas ventana = new frmVentasRealizadas(tablas);
             ventana.setVisible(true);
-            dispose();
+           // dispose();
         } catch (Exception ex) {
             Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jVentasRealizadasActionPerformed
+    }//GEN-LAST:event_jConsultaVentasActionPerformed
 
-    private void jPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPedidoActionPerformed
+    private void jHacerFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jHacerFacturaActionPerformed
         try {
             frmControlPedidos ventana = new frmControlPedidos(tablas);
             ventana.setVisible(true);
@@ -154,7 +164,7 @@ public class frmMenu extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jPedidoActionPerformed
+    }//GEN-LAST:event_jHacerFacturaActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 
@@ -164,7 +174,7 @@ public class frmMenu extends javax.swing.JFrame {
 
     }//GEN-LAST:event_formWindowClosing
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPedidoActionPerformed
         // TODO add your handling code here:
         try {
             frmHacerPedido ventana = new frmHacerPedido(tablas);
@@ -172,7 +182,17 @@ public class frmMenu extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jPedidoActionPerformed
+
+    private void jListarFacturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jListarFacturasActionPerformed
+        try {
+            frmListaFacturas ventana = new frmListaFacturas(tablas);
+            ventana.setVisible(true);
+            //dispose();
+        } catch (Exception ex) {
+            Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jListarFacturasActionPerformed
     @Override
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().
@@ -187,13 +207,14 @@ public class frmMenu extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem jConsultaVentas;
+    private javax.swing.JMenuItem jHacerFactura;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenuItem jListarFacturas;
     private javax.swing.JMenu jMenu;
     private javax.swing.JMenuBar jMenuBar;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jPedido;
     private javax.swing.JMenuItem jProductos;
     private javax.swing.JMenuItem jSalir;
-    private javax.swing.JMenuItem jVentasRealizadas;
     // End of variables declaration//GEN-END:variables
 }

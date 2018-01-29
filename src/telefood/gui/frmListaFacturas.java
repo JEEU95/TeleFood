@@ -72,8 +72,9 @@ public class frmListaFacturas extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbListaVentas = new javax.swing.JTable();
         btnAceptar = new javax.swing.JButton();
-        jComboBoxFecha = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
+        txtFecha = new javax.swing.JFormattedTextField();
+        chbFecha = new javax.swing.JCheckBox();
+        btnFiltrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -100,14 +101,24 @@ public class frmListaFacturas extends javax.swing.JFrame {
             }
         });
 
-        jComboBoxFecha.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "dd/mm/yy", " " }));
-        jComboBoxFecha.addActionListener(new java.awt.event.ActionListener() {
+        txtFecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
+        txtFecha.setEnabled(false);
+
+        chbFecha.setText("Filtrar por fecha:");
+        chbFecha.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                chbFechaStateChanged(evt);
+            }
+        });
+        chbFecha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxFechaActionPerformed(evt);
+                chbFechaActionPerformed(evt);
             }
         });
 
-        jLabel4.setText("Filtrar por fecha:");
+        btnFiltrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/filtro.png"))); // NOI18N
+        btnFiltrar.setText("Filtrar");
+        btnFiltrar.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -133,10 +144,12 @@ public class frmListaFacturas extends javax.swing.JFrame {
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(jComboBoxFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(254, 254, 254)
+                        .addComponent(chbFecha)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtFecha)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -149,10 +162,11 @@ public class frmListaFacturas extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3))
                     .addComponent(jLabel1))
-                .addGap(5, 5, 5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBoxFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(chbFecha)
+                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnFiltrar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -165,8 +179,7 @@ public class frmListaFacturas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        frmMenu ventana = new frmMenu(ventas);
-        ventana.setVisible(true);
+        
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -175,18 +188,29 @@ public class frmListaFacturas extends javax.swing.JFrame {
 
     }//GEN-LAST:event_formWindowOpened
 
-    private void jComboBoxFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFechaActionPerformed
+    private void chbFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbFechaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chbFechaActionPerformed
 
-    }//GEN-LAST:event_jComboBoxFechaActionPerformed
+    private void chbFechaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chbFechaStateChanged
+        if(chbFecha.isSelected()){
+            txtFecha.setEnabled(true);
+            btnFiltrar.setEnabled(true);
+        }else{
+            btnFiltrar.setEnabled(false);
+            txtFecha.setEnabled(false);
+        }
+    }//GEN-LAST:event_chbFechaStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
-    private javax.swing.JComboBox<String> jComboBoxFecha;
+    private javax.swing.JButton btnFiltrar;
+    private javax.swing.JCheckBox chbFecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbListaVentas;
+    private javax.swing.JFormattedTextField txtFecha;
     // End of variables declaration//GEN-END:variables
 }

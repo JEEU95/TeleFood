@@ -261,7 +261,7 @@ public class frmFactura extends javax.swing.JFrame {
             }
         });
 
-        btnBuscar.setBackground(new java.awt.Color(204, 102, 0));
+        btnBuscar.setBackground(new java.awt.Color(153, 51, 0));
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/lupa.png"))); // NOI18N
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -439,7 +439,13 @@ public class frmFactura extends javax.swing.JFrame {
 
     public void insertarCliente() {
         Registro registro;
-        if (!cliente && !txtCedula.equals("-----")) {
+        
+        if(txtCedula.getText().equals("-----")){
+            cliente=true;
+        }
+        
+        System.out.println("Estado cliente: "+!cliente);
+        if (!cliente ) {
             try {
                 registro = new Registro();
                 registro.setDatos("'" + txtCedula.getText() + "'");
