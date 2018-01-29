@@ -30,6 +30,7 @@ public class frmMenu extends javax.swing.JFrame {
         jMenuBar = new javax.swing.JMenuBar();
         jMenu = new javax.swing.JMenu();
         jProductos = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jVentasRealizadas = new javax.swing.JMenuItem();
         jPedido = new javax.swing.JMenuItem();
         jSalir = new javax.swing.JMenuItem();
@@ -57,6 +58,15 @@ public class frmMenu extends javax.swing.JFrame {
             }
         });
         jMenu.add(jProductos);
+
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/barra.png"))); // NOI18N
+        jMenuItem1.setText("Hacer Pedido");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu.add(jMenuItem1);
 
         jVentasRealizadas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/listado.png"))); // NOI18N
         jVentasRealizadas.setText("Facturas");
@@ -153,6 +163,16 @@ public class frmMenu extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
 
     }//GEN-LAST:event_formWindowClosing
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        try {
+            frmHacerPedido ventana = new frmHacerPedido(tablas);
+            ventana.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
     @Override
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().
@@ -170,6 +190,7 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu;
     private javax.swing.JMenuBar jMenuBar;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jPedido;
     private javax.swing.JMenuItem jProductos;
     private javax.swing.JMenuItem jSalir;
