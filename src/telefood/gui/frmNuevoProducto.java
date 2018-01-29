@@ -268,9 +268,9 @@ public class frmNuevoProducto extends javax.swing.JFrame {
         reg.setDatos(txtCosto.getText());
         
         if (jRadioButton1.isSelected()){
-            reg.setDatos(1);
-        } else {
             reg.setDatos(0);
+        } else {
+            reg.setDatos(1);
         }
 
         if (cmbCategoria.getSelectedItem().equals("Comida")) {
