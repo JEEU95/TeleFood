@@ -64,7 +64,6 @@ public class frmControlPedidos extends javax.swing.JFrame {
 
         btnSiguiente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/telefood/gui/img/siguiente.png"))); // NOI18N
         btnSiguiente.setText("Siguiente");
-        btnSiguiente.setEnabled(false);
         btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSiguienteActionPerformed(evt);
@@ -309,7 +308,7 @@ public class frmControlPedidos extends javax.swing.JFrame {
 
         reg.setDatos(campos);
         reg.setDatos("Pedido");
-        reg.setDatos("DesdeId='" + cmbDesde.getSelectedItem() + "'");
+        reg.setDatos("DesdeId='" + cmbDesde.getSelectedItem() + "' AND Despachado ='1'");
 
         Object o = (Object) reg;
 
@@ -332,11 +331,12 @@ public class frmControlPedidos extends javax.swing.JFrame {
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
         int i = (Integer) spnCuentas.getValue();
-
+        int id=Integer.parseInt(tbPedidos.getValueAt(0, 0).toString());
+        System.out.println("id:"+id);
         if (rbtnSi.isSelected()) {
             frmPedidos ventana;
             try {
-                ventana = new frmPedidos(i, pedidos);
+                ventana = new frmPedidos(i, pedidos,id);
                 ventana.setVisible(true);
                 dispose();
             } catch (Exception ex) {
@@ -347,17 +347,20 @@ public class frmControlPedidos extends javax.swing.JFrame {
             frmFactura ventana;
             try {
                 if (rbtnConsumidor.isSelected()) {
-                    ventana = new frmFactura(1, true, pedidos, 1);
+                    ventana = new frmFactura(1, true, pedidos, id);
                 } else {
-                    ventana = new frmFactura(1, false, pedidos, 1);
+                    ventana = new frmFactura(1, false, pedidos, id);
                 }
                 ventana.setVisible(true);
                 dispose();
             } catch (Exception e) {
                 System.out.println(e);
             }
-
         }
+        
+        
+        
+        
 
 
     }//GEN-LAST:event_btnSiguienteActionPerformed

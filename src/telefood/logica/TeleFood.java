@@ -197,7 +197,7 @@ public class TeleFood {
                 //leer celda por celda y almacenar los datos en el objeto
                 for (String c : campos) {
                     
-                    c=c.replaceAll("DISTINCT DesdeId", "DesdeId");
+                    c=c.replaceAll("DISTINCT ", "");
                     datos.setDatos(rs.getString(c));//llena el objeto con los campos obtenidos, (Dentrode los parentesis va la columna a buscar)
                 }
                 

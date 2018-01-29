@@ -19,11 +19,11 @@ public class frmPedidosProductos extends javax.swing.JFrame {
     TeleFood ped_pro = null;
     frmPedidos ventana;
     int num=0;
-    
-    public frmPedidosProductos(int num,TeleFood ped_pro) throws Exception {
+    int id =0;
+    public frmPedidosProductos(int num,TeleFood ped_pro, int id) throws Exception {
         this.ped_pro=ped_pro;
-        this.ventana = new frmPedidos(num,ped_pro);
-
+        this.ventana = new frmPedidos(num,ped_pro, id);
+        this.id =id;
         initComponents();
     }
     
